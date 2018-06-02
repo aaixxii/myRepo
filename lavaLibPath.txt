@@ -1,0 +1,154 @@
+﻿https://blog.csdn.net/cruise_h/article/details/41575481
+
+在VM参数处通过-Djava.library.path后将加载路径指定到自己的lib目录后，程序可以正常启动。
+
+
+public static void addLibraryDir(String libraryPath) throws IOException {
+		try {
+			Field field = ClassLoader.class.getDeclaredField("usr_paths");
+			field.setAccessible(true);
+			String[] paths = (String[]) field.get(null);
+			for (int i = 0; i < paths.length; i++) {
+				if (libraryPath.equals(paths[i])) {
+					return;
+				}
+			}
+
+			String[] tmp = new String[paths.length + 1];
+			System.arraycopy(paths, 0, tmp, 0, paths.length);
+			tmp[paths.length] = libraryPath;
+			field.set(null, tmp);
+		} catch (IllegalAccessException e) {
+			throw new IOException(
+					"Failedto get permissions to set library path");
+		} catch (NoSuchFieldException e) {
+			throw new IOException(
+					"Failedto get field handle to set library path");
+		}
+	}
+
+
+Linux环境
+系统变量LD_LIBRARY_PATH来添加java.library.path
+Windows
+在系统->高级系统设置->环境变量里，在path变量里添加。
+Eclipse
+在Properties -> Run/Debug settings -> Arguments->VM arguments里添加：
+-Djava.library.path=/home/abc/workspace/
+
+
+
+private static void loadJNILibDynamically() {
+        try {
+            System.setProperty("java.library.path", System.getProperty("java.library.path")
+                    + ":/home/abc/workspace/");
+            Field fieldSysPath = ClassLoader.class.getDeclaredField("sys_paths");
+            fieldSysPath.setAccessible(true);
+            fieldSysPath.set(null, null);
+
+            System.loadLibrary("JNIC");
+        } catch (Exception e) {
+            // do nothing for exception
+        }
+    }
+
+
+1. Java的System.load 和 System.loadLibrary都可以用来加载库文件
+2.例如你可以这样载入一个windows平台下JNI库文件：
+System.load("C://Documents and Settings//TestJNI.dll"); 绝对路径
+3. System.loadLibrary参数为库文件名
+例如你可以这样载入一个windows平台下JNI库文件
+System.loadLibrary ("TestJNI");
+这里TestJNI必须在 java.library.path这一jvm变量所指向的路径中，可以通过如下方法获得该变量的值：
+  System.getProperty("java.library.path");
+默认情况下，Windows平台下包含下面的路径：
+  1）和jre相关的目录
+  2）程序当前目录
+  3）Windows目录
+  4）系统目录(system32)
+  5）系统环境变量path指定的目录
+
+4.在linux下添加一个java.library.path的方法如下：
+  在/etc/profile 后面加上一行 export LB_LIBRARY_PATH=路径
+
+5.在执行程序的时候可以显示指定， -Djava.library.path=路径，这种会清除掉预设置的java.library.path的值 。实例如下：
+java -jar -Djava.library.path=/home/fly/Desktop/sound_dream  sound.war
+
+ 
+
+方法一： export  LD_LIBRARY_PATH=LD_LIBRARY_PATH:/XXX 但是登出后就失效
+方法二：  修改~/.bashrc或~/.bash_profile或系统级别的/etc/profile
+                  1. 在其中添加例如export PATH=/opt/ActiveP/lib:$LD_LIBRARY_PATH
+                  2. source .bashrc  (Source命令也称为“点命令”，也就是一个点符号（.）。source命令通常用于重新执行刚修改的初始化文件，使之立即生效，而不必注销并重新登录)
+方法三：这个没有修改LD_LIBRARY_PATH但是效果是一样的实现动态库的查找， 
+                1. /etc/ld.so.conf下面加一行/usr/local/mysql/lib
+                2. 保存过后ldconfig一下（ldconfig 命令的用途,主要是在默认搜寻目录(/lib和/usr/lib)以及动态库配置文件/etc/ld.so.conf内所列的目录下,搜索出可共享的动态链接库(格式如前介绍,lib*.so*),进而创建出动态装入程序(ld.so)所需的连接和缓存文件.缓存文件默认为/etc/ld.so.cache,此文件保存已排好序的动态链接库名字列表.）
+方法三设置稍微麻烦，好处是比较不受用户的限制。
+
+
+    如果不考虑上述的各种情况，你可以通过修改home目录下的 .bashrc 文件来设置LD_LIBRARY_PATH环境变量，这样每次当你启用一个会话连接到系统时，系统会自动执行该文件指定的命令，这样免去了每次手动设置相关参数的麻烦。增加如下一行：
+      export LIBRARY_PATH="/list/of/library/paths:/another/path"
+      一般情况下，只有当程序所需的依赖库不是系统标准安装的库或对库的版本特定要求时，可以指定 LD_LIBRARY_PATH环境变量实现。
+      通过下面的命令可以查看可执行文件或库文件本身对所依赖的库的情况：
+      $ ldd ~/myprogram
+      输出类似：
+      librt.so.1 => /lib/librt.so.1 (0x00002b4eca08e000)
+libc.so.6 => /lib/libc.so.6 (0x00002b4eca49f000)
+libpthread.so.0 => /lib/libpthread.so.0 (0x00002b4eca7df000)
+/lib64/ld-linux-x86-64.so.2 (0x00002b4ec9e72000)
+libmylib.so.1 => not found
+        检查结果表明， 链接器无法找到依赖的库libmylib.so.1    
+        我们假设存在这个库 在~/yprogdir/lib/libmylib.so.1, 现在我们可能通过设置LD_LIBRARY_PATH环境变量以便链接器找到。
+        $ export LD_LIBRARY_PATH="~/myprogdir/lib/:$LD_LIBRARY_PATH"
+        $ ldd ~/myprogram
+
+
+JAVA系统运行时候load native lib时候会遇到下面错误，如
+java.lang.UnsatisfiedLinkError: no JSTAF in java.library.path
+
+这可能是因为lib文件不存在、读写权限或虚拟机无法定位
+解决此问题需要设定一下访问路径
+Linux系统下 set LD_LIBRARY_PATH
+Windows系统下 set PATH
+
+或者通过JVM参数指定 java -Djava.library.path=/path/to/libs
+
+另外也可以编程解决
+System.setProperty( "java.library.path", "/path/to/libs" );
+（该方法在IDEA中成功，但是在Eclipse失败，原因不明） 
+
+
+(1)用文本编辑器打开/etc/profile 
+ 
+(2)在profile文件末尾加入： 
+JAVA_HOME=/usr/share/jdk1.5.0_05 
+PATH=$JAVA_HOME/bin:$PATH 
+CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar 
+export JAVA_HOME 
+export PATH 
+export CLASSPATH 
+
+
+private static void addLibraryDir(String libraryPath) throws Exception {
+		Field userPathsField = ClassLoader.class.getDeclaredField("usr_paths");
+		userPathsField.setAccessible(true);
+		String[] paths = (String[]) userPathsField.get(null);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < paths.length; i++) {
+			if (libraryPath.equals(paths[i])) {
+				continue;
+			}
+			sb.append(paths[i]).append(';');
+		}
+		sb.append(libraryPath);
+		System.setProperty("java.library.path", sb.toString());
+		final Field sysPathsField = ClassLoader.class.getDeclaredField("sys_paths");
+		sysPathsField.setAccessible(true);
+		sysPathsField.set(null, null);
+	}
+
+http://www.360doc.com/content/16/0606/15/6828497_565530762.shtml
+
+
+http://www.360doc.com/content/16/0606/15/6828497_565530762.shtml
+
