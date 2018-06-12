@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>jp.co.nec.aim.mm.ear</groupId>
+	<artifactId>mm-ear</artifactId>
+	<packaging>ear</packaging>
+	<name>mm-ear</name>
+	<url>http://www.nec.co.jp</url>
+
+	<parent>
+		<groupId>jp.co.nec.aim.mm</groupId>
+		<artifactId>matchmanager</artifactId>
+		<version>5.4.0</version>
+	</parent>
+
+	<dependencies>
+		<!-- Dependencies on the ejb and web modules so that they can be found 
+			by the ear plugin -->
+		<dependency>
+			<groupId>jp.co.nec.aim.mm.web</groupId>
+			<artifactId>mm-web</artifactId>
+			<version>5.4.0</version>
+			<type>war</type>
+		</dependency>
+		<dependency>
+			<groupId>jp.co.nec.aim.mm.ejb</groupId>
+			<artifactId>mm-ejb</artifactId>
+			<version>5.4.0</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle.jdbc</groupId>
+			<artifactId>ojdbc8</artifactId>
+			<scope>provide</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>matchmanager</finalName>
+		<plugins>
+			<!-- Ear plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>${version.ear.plugin}</version>
+				<!-- configuring the ear plugin -->
+				<configuration>
+					<!-- Tell Maven we are using Java EE 7 -->
+					<version>6</version>
+					<!-- Use Java EE ear libraries as needed. Java EE ear libraries are 
+						in easy way to package any libraries needed in the ear, and automatically 
+						have any modules (EJB-JARs and WARs) use them -->
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<!-- Default context root of the web app is /wildfly-ejb-in-ear-web. 
+							If a custom context root is needed, uncomment the following snippet to register 
+							our War as a web module and set the contextRoot property -->
+						<ejbModule>
+							<groupId>jp.co.nec.aim.mm.ejb</groupId>
+							<artifactId>mm-ejb</artifactId>
+							<bundleFileName>mm-ejb.jar</bundleFileName>
+						</ejbModule>
+						<webModule>
+							<groupId>jp.co.nec.aim.mm.web</groupId>
+							<artifactId>mm-web</artifactId>
+							<bundleFileName>mm-web.war</bundleFileName>
+							<contextRoot>matchmanager</contextRoot>
+						</webModule>
+						<jarModule>
+							<groupId>com.oracle.jdbc</groupId>
+							<artifactId>ojdbc8</artifactId>
+							<excluded>true</excluded>
+						</jarModule>
+						<jarModule>
+							<groupId>jp.co.nec.aim.license</groupId>
+							<artifactId>license-validation</artifactId>
+							<excluded>true</excluded>
+						</jarModule>					
+						
+						<jarModule>
+							<groupId>jp.co.nec.aim.license</groupId>
+							<artifactId>license-validation</artifactId>
+							<bundleDir>/</bundleDir>
+						</jarModule>
+					</modules>
+					<fileNameMapping>no-version</fileNameMapping>
+				</configuration>
+			</plugin>
+			<!-- WildFly plugin to deploy ear -->
+			<!-- <plugin> <groupId>org.wildfly.plugins</groupId> <artifactId>wildfly-maven-plugin</artifactId> 
+				<version>${version.wildfly.maven.plugin}</version> <configuration> <filename>${project.artifactId}.ear</filename> 
+				<skip>false</skip> </configuration> </plugin> -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.5.1</version>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.wildfly</groupId>
+									<artifactId>wildfly-dist</artifactId>
+									<version>${version.wildfly}</version>
+									<type>zip</type>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${project.build.directory}/unpacked</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<descriptors>
+						<descriptor>src/main/assembly/assembly.xml</descriptor>
+					</descriptors>
+					<finalName>wildfly-${version.wildfly}</finalName>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>rpm-maven-plugin</artifactId> 
+				<version>2.1-alpha-3</version> <executions> <execution> <id>rpm</id> <phase>package</phase> 
+				<goals> <goal>rpm</goal> </goals> <configuration> <group>NEC AIM</group> 
+				<copyright>NEC</copyright> <prefix>/home/aimuser/MM</prefix> <vendor>NEC 
+				Corporation</vendor> <summary>NEC AIM MM</summary> <name>aim-mm</name> <needarch>x86_64</needarch> 
+				<autoProvides>false</autoProvides> <autoRequires>false</autoRequires> <release>0</release> 
+				<mappings> <mapping> <directory>/home/aimuser/MM/wildfly-${version.wildfly}</directory> 
+				<sources> <source> <location>${project.basedir}/wildfly-${version.wildfly}</location> 
+				</source> </sources> </mapping> <mapping> <directory>/etc/init.d</directory> 
+				<directoryIncluded>false</directoryIncluded> <sources> <source> <location>${project.basedir}/etc/init.d</location> 
+				</source> </sources> </mapping> <mapping> <directory>/home/aimuser/MM/wildfly-${version.wildfly}/standalone/deployments</directory> 
+				<sources> <source> <location>${project.build.directory}</location> <includes> 
+				<include>${project.build.finalName}.ear</include> </includes> </source> </sources> 
+				</mapping> <mapping> <directory>/home/aimuser/MM/wildfly-${version.wildfly}/license/agent</directory> 
+				<sources> <source> <location>${project.basedir}/wildfly-${version.wildfly}/license/agent</location> 
+				</source> </sources> </mapping> <mapping> <directory>/home/aimuser/MM/wildfly-${version.wildfly}/license/lmx/linux_x64</directory> 
+				<sources> <source> <location>${project.basedir}/wildfly-${version.wildfly}/license/lmx/linux_x64</location> 
+				</source> </sources> </mapping> <mapping> <directory>/home/aimuser/MM/wildfly-${version.wildfly}/modules/com/oracle/jdbc/main</directory> 
+				<dependency> <stripVersion>true</stripVersion> <includes> <include>com.oracle.jdbc:ojdbc8:${version.oracle}</include> 
+				</includes> </dependency> </mapping> </mappings> </configuration> </execution> 
+				</executions> </plugin> -->
+
+		</plugins>
+	</build>
+</project>
