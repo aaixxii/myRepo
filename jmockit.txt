@@ -1,0 +1,333 @@
+﻿http://teqspaces.com/JMockit/2
+
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import mockit.Expectations;
+import mockit.Mocked;
+
+public class SampleTest {
+
+    // ①モックにする変数にアノテーション付加
+    @Mocked
+    private MyCalendar myCal;
+    
+    @Test
+    public void testIsDecember() {
+
+        // ②モックにしたクラスの挙動を記述
+        new Expectations() {{
+            myCal.getToday();
+            result = "2015/12/01";  // 1回目に呼ばれたときに返す値
+            result = "2015/08/15";  // 2回目に呼ばれたときに返す値
+        }};
+
+        Sample sample = new Sample();
+        assertTrue(sample.isDecember());  // ③現在日が"2015/12/01"になるためtrue
+        assertFalse(sample.isDecember()); // ④現在日が"2015/08/15"になるためfalse
+    }
+}
+
+
+package mockittest;
+
+import static org.junit.Assert.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+import org.junit.Test;
+
+import mockit.Expectations;
+import mockit.Mocked;
+
+/** テストクラス */
+public class MockitTest {
+
+    /** BufferedReaderのモック */
+    @Mocked
+    private BufferedReader br;
+
+    /** readFileのテストメソッド */
+    @Test
+    public void testReadFile() throws Exception {
+
+        new Expectations() {{
+            
+            // モックするメソッドを呼ぶ
+            br.readLine();
+            
+            // 発生させたい例外をresultにセットする
+            result = new IOException();
+        }};
+
+        try{
+            // readFileメソッド実行
+            FileRead sample = new FileRead();
+            sample.readFile();
+            
+        // 入出力例外キャッチ
+        }catch(IOException e){
+            // テスト成功
+            return;
+        }
+        
+        // テスト失敗
+        fail();
+    }
+}
+
+
+package mockittest2;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import mockit.NonStrictExpectations;
+import mockit.Mocked;
+
+public class MockitTest {
+
+    @Mocked
+    private MyCalendar myCal;
+    
+    @Test
+    public void testIsDecember() {
+
+        // ExpectationsからNonStrictExpectationsに変える
+        new NonStrictExpectations() {{
+            myCal.getToday();
+            result = "2015/05/01";
+        }};
+
+        Sample sample = new Sample();
+        assertFalse(sample.isDecember(null));
+    }
+}
+
+
+package mocktest3;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+
+import org.junit.Test;
+
+import mockit.Expectations;
+import mockit.Mocked;
+
+public class MockitTest {
+
+    @Mocked
+    private MyCalendar myCal;
+    
+    @Test
+    public void testIsDecember() {
+
+        new Expectations() {{
+            // 引数を指定してgetToday呼び出し
+            myCal.getToday(anyBoolean, anyString, (HashMap)any);
+            result = "2015/12/01";
+        }};
+
+        Sample sample = new Sample();
+        assertTrue(sample.isDecember());
+    }
+}
+
+package mocktest3;
+
+import java.util.HashMap;
+
+public class Sample {
+
+    /** 現在日が12月か判定 */
+    public boolean isDecember() {
+
+        MyCalendar myCal = new MyCalendar();
+        String month = myCal.getToday(true, "", new HashMap<String, Object>()).split("/")[1];
+
+        if("12".equals(month)){
+            return true;
+        }
+        return false;
+    }
+}
+
+package mockittest4;
+
+import static org.junit.Assert.*;
+import org.junit.Test;
+import mockit.Expectations;
+import mockit.Mocked;
+
+public class MockitTest {
+
+    @Mocked
+    private MyCalendar myCal;
+    
+    @Test
+    public void testIsDecember() {
+
+        new Expectations() {{
+            // staticメソッドのモック
+            MyCalendar.getToday();
+            result = "2015/12/01";
+        }};
+
+        Sample sample = new Sample();
+        assertTrue(sample.isDecember());
+    }
+}
+
+
+
+https://blog.csdn.net/guanhang89/article/details/78703945
+
+@Tested 注解的实例属性将会被自动初始化和注入，如果在测试方法执行前仍为null，将会调用默认构造函数（可以保证不为null）
+@Injectable 对象的注入，可以不是mock对象
+@Mocked或者@Capturing不会进行对象注入
+public class SomeTest
+{
+   @Tested CodeUnderTest tested;
+   @Injectable Dependency dep1;
+   @Injectable AnotherDependency dep2;
+   //需要指明初始值，不然将会使用默认值
+   @Injectable int someIntegralProperty = 123;
+
+   //可以通过注解来赋值
+   @Test
+   public void someTestMethod(@Injectable("true") boolean flag, @Injectable("Mary") String name) {
+      // Record expectations on mocked types, if needed.
+
+      tested.exerciseCodeUnderTest();
+
+      // Verify expectations on mocked types, if required.
+   }
+}
+
+Tested ClassUnderTest cut;
+
+@Test
+public void doSomethingHandlesSomeCheckedException(@Mocked DependencyAbc abc) throws Exception {
+   new Expectations() {{
+(1)   abc.intReturningMethod(); result = 3;
+
+(2)   abc.stringReturningMethod();
+      returns("str1", "str2");
+      result = new SomeCheckedException();
+   }};
+
+   cut.doSomething();
+}
+
+@Tested CodeUnderTest cut;
+
+@Test
+public void someTestMethod(@Mocked DependencyAbc abc) {
+   DataItem item = new DataItem(...);
+
+   new Expectations() {{
+      // 匹配 "voidMethod(String, List)" 方法的调用
+      abc.voidMethod(anyString, (List<?>) any);
+   }};
+
+   cut.doSomething(item);
+
+   new Verifications() {{
+      // Matches invocations to the specified method with any value of type long or Long.
+      //匹配anotherVoidMethod（Long）
+      abc.anotherVoidMethod(anyLong);
+   }};
+}
+
+@Tested CodeUnderTest cut;
+
+@Test
+public void someTestMethod(@Mocked DependencyAbc abc) {
+   DataItem item = new DataItem(...);
+
+   new Expectations() {{
+      // 匹配 "voidMethod(String, List)" 方法的调用
+      abc.voidMethod(anyString, (List<?>) any);
+   }};
+
+   cut.doSomething(item);
+
+   new Verifications() {{
+      // Matches invocations to the specified method with any value of type long or Long.
+      //匹配anotherVoidMethod（Long）
+      abc.anotherVoidMethod(anyLong);
+   }};
+}
+
+@Test
+public void verifyInvocationsExplicitlyAtEndOfTest(@Mocked Dependency mock) {
+   // Nothing recorded here, though it could be.
+
+   // Inside tested code:
+   Dependency dependency = new Dependency();
+   dependency.doSomething(123, true, "abc-xyz");
+   // 验证指定参数类型的doSomething至少被调用了一次
+   // Verifies that Dependency#doSomething(int, boolean, String) was called at least once,
+   // with arguments that obey the specified constraints:
+   new Verifications() {{ mock.doSomething(anyInt, true, withPrefix("abc")); }};
+
+@Test
+public void verifyingExpectationsInOrder(@Mocked DependencyAbc abc) {
+   // Somewhere inside the tested code:
+   abc.aMethod();
+   abc.doSomething("blah", 123);
+   abc.anotherMethod(5);
+   ...
+   //验证是否按照该顺序进行
+   //doSomething的顺序没有验证，顺序以及是否产生调用都没有影响
+   new VerificationsInOrder() {{
+      // The order of these invocations must be the same as the order
+      // of occurrence during replay of the matching invocations.
+      abc.aMethod();
+      abc.anotherMethod(anyInt);
+   }};
+}
+
+Tested CodeUnderTest cut;
+
+@Test
+public void delegatingInvocationsToACustomDelegate(@Mocked DependencyAbc anyAbc) {
+   new Expectations() {{
+      anyAbc.intReturningMethod(anyInt, anyString);
+      //使用Delegate来定制化结果
+      result = new Delegate() {
+         int aDelegateMethod(int i, String s) {
+            return i == 1 ? i : s.length();
+         }
+      };
+   }};
+
+   // Calls to "intReturningMethod(int, String)" will execute the delegate method above.
+   cut.doSomething();
+}
+
+mock不确定的实现类，使用@Capturing注解，它能mock所有的实现类
+
+public final class UnitTest
+{
+   @Capturing Service anyService;
+
+   @Test
+   public void mockingImplementationClassesFromAGivenBaseType() {
+      new Expectations() {{ anyService.doSomething(); returns(3, 4); }};
+
+      int result = new TestedUnit().businessOperation();
+
+      assertEquals(7, result);
+   }
+}
+
+https://blog.csdn.net/guanhang89/article/details/78726544
+
