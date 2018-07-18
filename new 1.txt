@@ -1,3 +1,0 @@
-DBeaver
-Notepad++
-beyondcompare4
