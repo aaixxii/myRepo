@@ -1,0 +1,63 @@
+﻿https://docs.nomagic.com/display/TWCloud190/Installing+and+configuring+Cassandra+on+Linux
+
+1. Check which version of Java is installed by running the following command: 
+  $ java -version
+
+2. Add the Apache repository of Cassandra to /etc/yum.repos.d
+
+$sudo vi /etc/yum.repos.d/cassandra.repo
+
+[cassandra]
+name = Apache Cassandra
+baseurl=https://www.apache.org/dist/cassandra/redhat/311x/
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://www.apache.org/dist/cassandra/KEYS
+
+3. Install the packages by using the following command line: 
+  sudo yum install cassandra
+4. Make Cassandra starts automatically after reboot by typing the following
+  $chkconfig cassandra on
+5.Configure Cassandra as follows.
+  etc/cassandra/ conf/cassandra.yaml
+6. starting Cassandra. 
+    $ sudo service cassandra start 
+7. Issue the following command to verify that Cassandra is ready:
+   $ tail /var/log/cassandra/cassandra.log 
+8l Verify that Cassandra is running:
+  $ nodetool status 
+
+Post installation configuration
+To edit /etc/init.d/cassandra to resolve the service control issue
+
+Issue the following command
+sudo nano /etc/init.d/cassandra
+Locate the line starting with
+# chkconfig:
+Edit it to contain the following
+# chkconfig: 2345 80 80
+
+This will delay the execution to the appropriate point in time.
+
+Next, locate the line starting with
+CASSANDRA_PROG=/usr/sbin/cassandra
+Insert the following below the line:
+#-------  Beginning of Centos7 modifications for startup script
+# Note start priority changed from 20 to 80 in chkconfig definition
+# create run dir for pid file
+[ -d /var/run/cassandra ] || mkdir /var/run/cassandra
+chown cassandra /var/run/cassandra
+#------  End of Centos7 modifications for startup script
+
+Save the file. Now we must add the service to the boot process:
+chkconfig --add cassandra
+Now, proceed to edit /etc/cassandra/default.conf/cassandra.yaml
+sudo nano /etc/cassandra/default.conf/cassandra.yaml
+
+sudo service cassandra start 
+
+If you get an out of memory error when starting Cassandra, you need to open the file /etc/cassandra/conf/cassandra-env.sh and increase the Java stack size from JVM_OPTS="$JVM_OPTS -Xss180k" to JVM_OPTS="$JVM_OPTS -Xss228k". 
+
+To stop Cassandra on Linux
+
+$ sudo service cassandra stop

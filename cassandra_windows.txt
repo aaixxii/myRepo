@@ -1,0 +1,165 @@
+﻿
+Windows:
+
+1. install jdk8
+2. install python 2.7.3(環境変数Path設定）
+　python -V
+3. install cassandra
+4．cassandra.batでCassandraを起動
+5.cqlsh.batをクリック
+6.CQLCommandを入力：
+
+CREATE KEYSPACE test WITH REPLICATION = { 'class': 'SimpleStrategy', 'replication_factor': 1};
+DESCRIBE KEYSPACES;
+
+ USE test;
+ CREATE TABLE countries ( id INT PRIMARY KEY, name TEXT, code TEXT );
+ SELECT * FROM countries WHERE id = 1;
+
+
+linux:
+yum install:
+
+前提
+安装java8 
+安装python2.7. 
+安装
+添加datastax仓库
+vi /etc/yum.repos.d/datastax.repo    
+[datastax]
+name= DataStax Repo for Apache Cassandra
+baseurl=http://rpm.datastax.com/community
+enabled=1
+gpgcheck=0
+安装DSC 2.2
+yum install dsc22.noarch 
+配置
+配置文件
+cluster_name: 'YourClusterName'
+num_tokens: 256
+seed_provider:
+ - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+   parameters:
+        - seeds: "110.82.155.0,110.82.155.3" # 这里每个数据中心建议至少配置2个
+listen_address: 110.82.155.0 # 本机IP，如果配置好了/etc/hosts，则此项可以注释不配置
+rpc_address: 0.0.0.0
+endpoint_snitch: RackInferringSnitch
+data_file_directories:
+   - /data1/cassandra/data
+commitlog_directory: /data/cassandra/commitlog
+目录授权
+mkdir -p  /data1/cassandra/data
+mkdir -p /data/cassandra/commitlog
+chown -R cassandra:cassandra /data1/cassandra/data
+chown -R cassandra:cassandra /data/cassandra/commitlog
+
+相关目录
+etc/cassandra/conf (配置文件路径)
+/var/log/cassandra (程序log目录)
+/var/lib/cassandra/commitlog (commit log路径，可以通过cassandra.yaml修改)
+/var/lib/cassandra/data (数据保存目录，可以通过cassandra.yaml修改)
+/var/run/cassandra (runtime files)
+/usr/share/cassandra (环境变量配置)
+/usr/share/cassandra/lib (JAR files)
+/usr/bin (执行文件路径)
+/usr/sbin
+/etc/init.d (service 启动脚本)
+
+/etc/hosts/配置
+启动cassandra
+service cassandra start | stop status
+故障诊断： 
+tail -fn 100 /var/log/cassandra/cassandra.log
+测试是否安装成功
+执行`./cqlsh` 测试是否安装成功 
+> 
+Connected to Test Cluster at 127.0.0.1:9042.
+ [cqlsh 5.0.1 | Cassandra 2.2.5 | CQL spec 3.3.1 | Native protocol v4]
+ Use HELP for help.
+ cqlsh>
+
+
+./cassandra -f -R #启动，-f表示前台启动，-R表示以管理员身份启动
+
+./cqlsh
+Ctrl+d  to quit
+shutdown :kill -9 pid
+
+CQL:
+
+cqlsh
+CQL対話型ターミナルを起動します。
+CAPTURE
+コマンド出力をキャプチャーして、ファイルに追記します。
+CLEAR
+cqlshコンソール画面をクリアします。
+CONSISTENCY
+現在の整合性レベルを表示するか、レベルを指定して設定します。
+COPY
+CSV（コンマ区切り値）データをCassandraにインポート、またはCassandraからエクスポートします。
+DESCRIBE
+接続されているCassandraクラスター、またはクラスターに格納されているデータ・オブジェクトに関する情報を提供します。
+EXPAND
+クエリーの出力を縦方向に書式設定します。
+EXIT
+cqlshを終了します。
+PAGING
+クエリーのページングを有効または無効にします。
+SERIAL CONSISTENCY
+現在のシリアル整合性レベルを設定します。
+SHOW
+現在のcqlshクライアント・セッションのCassandraバージョン、ホスト、またはトレース情報を表示します。
+SOURCE
+CQL文が含まれているファイルを実行します。
+TRACING
+トレーシングの要求を有効または無効にします。
+
+cqlsh [options] [host [port]]
+python cqlsh [options] [host [port]]
+
+SELECT * FROM system.schema_keyspaces
+
+
+Show all the Keyspaces:SELECT * FROM system.schema_keyspaces
+
+Create a Keyspace with replication factor 1:
+CREATE KEYSPACE test WITH REPLICATION = { 'class': 'SimpleStrategy', 'replication_factor': 1 }
+
+Create a Sample table:
+CREATE TABLE mytable (thekey text,col1 text,col2 text,PRIMARY KEY (thekey, col1))
+
+Create a more complex table:
+CREATE TABLE IF NOT EXISTS test (userid int, firstname text, lastname text, tele set<text>, emails set<text>, skills list<text>, todos map<timestamp,text>, PRIMARY KEY (userid) )
+
+Insert simple:
+INSERT INTO mytable (thekey, col1, col2) VALUES ('first', 'Carles Mateo', 'http://blog.carlesmateo.com')
+
+Insert more complex:
+INSERT INTO
+            test
+            (userid, firstname, lastname, tele, emails, skills, todos)
+     VALUES
+            (1, 'David', 'Lebrón',
+            {'770-111-1111','770-222-2222'},
+            {'myemail@carlesmateo.com','yxie2@kennesaw.edu'},
+            ['carpenter','instructor'],
+            {'2014-04-14':'project Cassandra Universal Driver'})
+
+Select:
+SELECT * FROM mytable
+DESCRIBE KEYSPACE Keyspace;
+USE Keyspace;
+DESCRIBE TABLES;
+
+
+https://www.linux78.com/index.php?title=Linux%E5%9F%BA%E7%A1%80
+
+unistall cassandra
+
+uninstall Cassandra with following steps:
+uninstall Cassandra using apt-get
+apt-get remove cassandra
+remove data/log/ directories 
+rm -rf /var/lib/cassandra
+rm -rf /var/log/cassandra
+rm -rf /etc/cassandra
