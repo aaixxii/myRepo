@@ -1,0 +1,150 @@
+﻿这次我们用revert回退到前一个版本，首先看看hg log：
+$ hg log
+changeset:   16:6b7d0fecb27b
+tag:         tip
+user:        zhaoyun
+date:        Fri Jan 29 14:25:09 2016 +0800
+summary:     fix some critical bug
+
+changeset:   15:59958f71202a
+user:        zhugeliang
+date:        Wed Jan 27 11:42:40 2016 +0800
+summary:     add xxx feature
+
+执行revert命令
+$ hg revert -r 59958f71202a --all
+reverting xxx/xxx/xxx.java
+版本回退了，再次进行commit+push就可以了。
+
+
+http://d.hatena.ne.jp/Kenji_s/20110609/1307598981
+
+hg eidt
+
+Histedit のインストール
+Histedit Extension を使いますので、インストールします。
+$ hg clone https://bitbucket.org/durin42/histedit
+「~/.hgrc」に以下を記載します。hg_histedit.py へのパスを記載します。
+[extensions]
+histedit = /path/to/histedit/hg_histedit.py
+チェンジセットの統合
+では、以下のようなリポジトリを想定します。
+$ hg glog --style compact -l 4
+@  2620[tip]   3a3f178dd767   2011-06-06 12:11 +0900   kenjis
+|    add new file: user_guide_ja/installation/upgrade_203.html
+|
+o  2619   f3ca6d702443   2011-06-06 03:00 +0900   hatohato25
+|    fix about Parentheses format
+|
+o  2618   ed67e9fff541   2011-06-06 02:19 +0900   hatohato25
+|    fix about (optional) format
+|
+o  2617   27ab2abcf991   2011-06-06 02:11 +0900   hatohato25
+|    fix translator's note format
+|
+それでは r2617:27ab2abcf991 以降のチェンジセットを変更してみましょう。
+$ hg histedit 2617
+エディタが起動し、以下のように表示されます。
+pick 27ab2abcf991 fix translator's note format
+pick ed67e9fff541 fix about (optional) format
+pick f3ca6d702443 fix about Parentheses format
+pick 3a3f178dd767 add new file: user_guide_ja/installation/upgrade_203.html
+
+# Edit history between 27ab2abcf991 and 3a3f178dd767
+#
+# Commands:
+#  p, pick = use commit
+#  e, edit = use commit, but stop for amending
+#  f, fold = use commit, but fold into previous commit
+#  d, drop = remove commit from history
+#
+チェンジセットが古い順に記載されています。ここで、変更したいチェンジセットを選択します。
+p または pick = そのまま
+e または edit = そのチェンジセットを変更する
+f または fold = 前のチェンジセットに含める
+d または drop = そのチェンジセットを削除する
+という意味になります。チェンジセットの左の文字を必要に応じて変更して保存します。
+例えば、27ab2abcf991 と ed67e9fff541 をまとめて 1つのチェンジセットにしたい場合は、以下のようにします。
+pick 27ab2abcf991 fix translator's note format
+f ed67e9fff541 fix about (optional) format
+pick f3ca6d702443 fix about Parentheses format
+pick 3a3f178dd767 add new file: user_guide_ja/installation/upgrade_203.html
+保存すると、またエディタが起動します。
+fix translator's note format
+***
+fix about (optional) format
+2つのチェンジセットのコミットメッセージが表示されていますので、削除して新しいコミットメッセージを記載し保存します。
+これで 2つのチェンジセットが 1つになりました。
+$ hg glog --style compact -l 4
+@  2619[tip]   c05927d364fa   2011-06-06 12:11 +0900   kenjis
+|    add new file: user_guide_ja/installation/upgrade_203.html
+|
+o  2618   1a3f07a85268   2011-06-06 03:00 +0900   hatohato25
+|    fix about Parentheses format
+|
+o  2617   38a298f7f1a0   2011-06-06 02:19 +0900   hatohato25
+|    new commit message
+|
+o    2616:2594,2610   b749e72d4217   2011-06-05 20:03 +0900   kenjis
+|\     merge with Reactor r2474:31b5c1dcf2ed
+| |
+r2617 のチェンジセット ID が 27ab2abcf991 から 38a298f7f1a0 に変わっていることに注意してください。
+チェンジセットの変更
+続いて r2617:38a298f7f1a0 を変更してみましょう。
+$ hg histedit 2617
+またエディタが起動し、以下のように表示されます。
+pick 38a298f7f1a0 new commit message
+pick 1a3f07a85268 fix about Parentheses format
+pick c05927d364fa add new file: user_guide_ja/installation/upgrade_203.html
+
+# Edit history between 38a298f7f1a0 and c05927d364fa
+#
+# Commands:
+#  p, pick = use commit
+#  e, edit = use commit, but stop for amending
+#  f, fold = use commit, but fold into previous commit
+#  d, drop = remove commit from history
+#
+38a298f7f1a0 の左の文字を以下のように変更し、保存します。
+e 38a298f7f1a0 new commit message
+pick 1a3f07a85268 fix about Parentheses format
+pick c05927d364fa add new file: user_guide_ja/installation/upgrade_203.html
+すると、プロンプトに戻ります。
+ファイル状態: 更新数 39、マージ数 0、削除数 1、衝突未解決数 0
+中止: Make changes as needed, you may commit or record as needed now.
+When you are finished, run hg histedit --continue to resume.
+$
+この状態が r2617:38a298f7f1a0 をコミットする前の状態です。r2617 の変更が作業領域に適用されています。
+$ hg st
+M user_guide_ja/changelog.html
+M user_guide_ja/database/connecting.html
+M user_guide_ja/general/helpers.html
+M user_guide_ja/general/views.html
+M user_guide_ja/libraries/benchmark.html
+M user_guide_ja/libraries/form_validation.html
+M user_guide_ja/libraries/image_lib.html
+M user_guide_ja/libraries/javascript.html
+M user_guide_ja/libraries/trackback.html
+必要な変更をファイルに加え、完了したら、
+$ hg histedit --continue
+とします。
+エディタが起動して現在のコミットメッセージが表示されますので、必要に応じて変更し保存します。
+new commit message
+ログを確認してみましょう。
+$ hg glog --style compact -l 4
+@  2619[tip]   e1b1742bd1e7   2011-06-06 12:11 +0900   kenjis
+|    add new file: user_guide_ja/installation/upgrade_203.html
+|
+o  2618   f7f36ca1fffd   2011-06-06 03:00 +0900   hatohato25
+|    fix about Parentheses format
+|
+o  2617   22277c1edfbe   2011-06-06 02:19 +0900   hatohato25
+|    changed commit message
+|
+o    2616:2594,2610   b749e72d4217   2011-06-05 20:03 +0900   kenjis
+|\     merge with Reactor r2474:31b5c1dcf2ed
+| |
+r2617 のコミットメッセージが変更されており、チェンジセットの ID も変わっています。
+
+直前のコミットであれば hg rollback で取り消せますが、それ以前のコミットは標準では簡単には変更できません。Histedit を使えば、簡単に過去のコミットやコミットメッセージを変更できます。MQ よりも簡単です。
+ただし、マスターとなるリポジトリに push してしまったチェンジセットは、誰かが pull してしまっている可能性がありますので、簡単には変更できませんので注意しましょう。
