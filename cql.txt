@@ -1,0 +1,35 @@
+﻿
+
+
+http://teddymaef.github.io/learncassandra/cn/model/cql.html
+
+
+
+
+
+
+1.忽略大小写。用双引号括起来，才区分大小写
+  支持list, map，SET
+2, -- OR //单行注释
+   /**     **/多行注释
+3. CREATE KEYSPACE/TABELE/INDEX/TRIGGER/TYPE
+   USE KEYSPACE
+   ALTER KEYSPACE/TABELE/INDEX/TRIGGER/TYPE
+   DROP KEYSPACE/TABELE/INDEX/TRIGGER/TYPE
+
+   CREATE KEYSPACE IF NOT EXISTS mykeyspace WITH<properties>
+
+   CREATE KEYSPACE mykeyspace
+           WITH replicatin={'class':'SimpleStrategy','replication_factor':3}
+           AND durable_writes=false;
+
+  DESC mykeysapce;
+
+  CREATE TABLE mytable(
+    species text PrIMARY key,
+    common_name text,
+     pppulation varint,
+    aveerage_size int
+   ) WITH comment='coment'
+     AND read_repair_chance=1.0
+   
