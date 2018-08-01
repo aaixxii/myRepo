@@ -1,0 +1,13 @@
+﻿DC
+机架
+
+bootstrap
+partition ring
+
+data のNode間の配置
+
+DB/FILE/CASSANDRA　对比
+
+图形界面工具
+
+写入快

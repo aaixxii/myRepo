@@ -1,0 +1,29 @@
+﻿$ docker version
+# 或者
+$ docker info
+ sudo usermod -aG docker $USER
+sudo service docker start
+ sudo systemctl start docker
+docker image ls
+ docker image rm [imageName
+
+docker image pull library/hello-world
+docker image pull hello-world
+docker container run hello-world
+docker container run -it ubuntu bash
+ docker container kill [containID]
+
+docker container ls
+
+ docker container ls --all
+docker container rm [containerID]
+ docker image build -t koa-demo .
+
+docker container kill [containerID]
+docker container start
+docker container start [containerID
+docker container stop
+docker container exec
+docker container exec -it [containerID] /bin/bash
+
+
