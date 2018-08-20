@@ -1,0 +1,68 @@
+version: '3'
+services:
+    megha:
+        container_name: megha
+        networks:
+            - xmnet
+        hostname: megha
+        image: megha
+        ports:
+            - '8080:8080'
+            - '9990:9990'  
+
+    cassandra-1:
+        container_name: cassandra-1
+        networks:
+            - xmnet
+        hostname: cassandra-1
+        image: cassandra
+        environment:
+            - CASSANDRA_START_RPC=true
+            - CASSANDRA_SEEDS=cassandra-1
+            - MAX_HEAP_SIZE=512M
+            - HEAP_NEWSIZE=200M
+  
+
+    cassandra-2:
+        container_name: cassandra-2
+        networks:
+            - xmnet
+        hostname: cassandra-2
+        image: cassandra
+        environment:
+            - CASSANDRA_START_RPC=true
+            - CASSANDRA_SEEDS=cassandra-1
+            - MAX_HEAP_SIZE=512M
+            - HEAP_NEWSIZE=200M
+   
+
+    cassandra-3:
+        container_name: cassandra-3
+        networks:
+            - xmnet
+        hostname: cassandra-3
+        image: cassandra
+        environment:
+            - CASSANDRA_START_RPC=true
+            - CASSANDRA_SEEDS=cassandra-1
+            - MAX_HEAP_SIZE=512M
+            - HEAP_NEWSIZE=200M
+   
+
+    cassandra-4:
+        container_name: cassandra-4
+        networks:
+            - xmnet
+        hostname: cassandra-4
+        image: cassandra
+        environment:
+            - CASSANDRA_START_RPC=true
+            - CASSANDRA_SEEDS=cassandra-1
+            - MAX_HEAP_SIZE=512M
+            - HEAP_NEWSIZE=200M
+ 
+
+networks:
+    xmnet:
+        external:
+            name: xmnet
