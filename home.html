@@ -15,6 +15,8 @@
 
 <script>
   window.onload = function() {
+      window.addEventListener('resize', resizeCanvas, false);  
+
       $("#imageFile1").change(function() {
           if (!this.files.length) {
               alert('File is not selected.');
@@ -37,6 +39,7 @@
           }
           fr.readAsDataURL(file);
       })
+
       $("#imageFile2").change(function() {
           if (!this.files.length) {
               alert('File is not selected.');
@@ -58,16 +61,10 @@
               image.src = evt.target.result;
           }
           fr.readAsDataURL(file);
-      })
-
-     //window.addEventListener('resize', resizeCanvas, false);
-      //document.getElementById('imageFile1').addEventListener('change', handleFileSelect, false);
-      //document.getElementById('imageFile2').addEventListener('change', handleFileSelect, false);
-      //drawAllImage();
+      })     
   }
 
-
-  function drawAllImage() {
+  function init_load() {
       var win_width = $(window).width();
       var win_height = $(window).height();
       var first_start_x = (win_width / 2 - 512) / 2;
@@ -102,43 +99,11 @@
       var second_start_y = first_start_y;
   }
 
- function resizeCanvas(){
-      var width = document.getElementById('wrapper').offsetWidth;
-      $('#canvas_i').attr('width', width);
- }
-      
-
-
-  function handleFileSelect(e) {
-      if (window.File && window.FileReader && window.FileList && window.Blob) {
-          var id = e.target.id;
-          var file = e.target.files[0];
-          var reader = new FileReader();
-          reader.onload = function(file) {
-              var canvasi = document.getElementById("canvas_i");
-              var context = canvasi.getContext("2d");
-              var win_width = $(window).width();
-              var win_height = $(window).height();
-              var imgf = new Image();
-              var start_x;
-              var start_y
-              if (id === 'imageFile1') {
-                  start_x = (win_width / 2 - 512) / 2;
-                  start_y = (win_height * 0.6 - 512) / 2;
-              } else if (id === 'imageFile2') {
-                  start_x = win_width / 2 + (win_width / 2 - 512) / 2;
-                  start_y = (win_height * 0.6 - 512) / 2;
-              }
-              imgf.onload = function() {
-                  drawOneImage(context, imgf, start_x, start_y, 512, 512);
-              };
-              imgf.src = e.target.result;
-          };
-          reader.readAsDataURL(file);
-      } else {
-          alert('The File APIs are not fully supported in this browser.');
-      }
-  }
+     function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      calculateSize();      
+    }  
 </script>
   <title>CHARTING VIEW TOOL</title>
 </head>
@@ -176,7 +141,7 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2 " type="text" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-dark my-2 my-sm-0" onClick="window.open('http://google.com')">Search</button>
       </form>
     </div>
   </nav>
@@ -184,7 +149,7 @@
   <main role="main">
     <div class="container-fluid ">
       <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2" style="width: 1/6vh">
           <div class="custom-file m-1" id="customFile1" lang="es">
             <input type="file" class="custom-file-input" id="imageFile1" aria-describedby="fileHelp">
             <label class="custom-file-label" for="exampleInputFile">
@@ -192,7 +157,7 @@
             </label>
           </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2" style="width: 1/6vh">
           <div class="custom-file m-1" id="customFile2" lang="es">
             <input type="file" class="custom-file-input" id="imageFile2" aria-describedby="fileHelp">
             <label class="custom-file-label" for="exampleInputFile">
@@ -200,13 +165,13 @@
             </label>
           </div>
         </div>
-        <div class="col-md-2" style="margin-top: 1px;">
+        <div class="col-md-2" style="margin-top: 1px;width: 1/6vh">
           <button type="button" class="btn btn btn btn-outline-success btn-mini btn-block">Mapping</button>
         </div>
-        <div class="col-md-2" style="margin-top: 1px;">
+        <div class="col-md-2" style="margin-top: 1px; width: 1/6vh">
           <button type="button" class="btn btn btn btn-outline-primary btn-mini btn-block">View List</button>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2"  style="width: 1/6vh">
           <div class="custom-file m-1" id="xmlFile" lang="es">
             <input type="file" class="custom-file-input" id="imageFile2" aria-describedby="fileHelp">
             <label class="custom-file-label" for="exampleInputFile">
@@ -214,10 +179,9 @@
             </label>
           </div>
         </div>
-       <div class="col-md-2" style="margin-top: 1px;">
+       <div class="col-md-2" style="margin-top: 1px; width: 1/6vh">
           <button type="button" class="btn btn btn btn-outline-danger btn-mini btn-block">Enhance</button>		  
         </div>
-
       </div>
 
 
@@ -234,11 +198,10 @@
         </div>
       </div>
     </div> <!-- /container -->
-
   </main>
 
   <footer class="container-fluid" style="height: 5vh; text-align:center;">
-    <p>&copy; Company 2017-2018</p>
+    <p>&copy; NEC Company 2018-2019</p>
   </footer>
 
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
