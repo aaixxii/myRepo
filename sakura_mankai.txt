@@ -1,0 +1,427 @@
+﻿sakura_mankai
+
+1. packTemplate
+2.関係テーブル
+
+ BiometricEventInfo,
+  	biometricEventInfo = new BiometricEventInfo();
+						biometricEventInfo.setExternalId(insertBiometricEventDto.getExternalId());
+						biometricEventInfo.setBinId(insertTemplateInfo.getBinId());
+						biometricEventInfo.setStatus(BiometricEventStatus.ACTIVE);
+						biometricEventInfo.setCreateDateTime(new Date());
+
+
+BiometricIdDetailInfo：
+
+BiometricIdDetailInfo biometricIdDetailInfo = biometricIdGenerator
+								.acquireBiometricId(insertTemplateInfo.getBinId());
+						biometricEventInfo.setBiometricId(biometricIdDetailInfo.getBiometricId());
+						biometricEventInfo.setAssignedSegmentId(biometricIdDetailInfo.getSegmentId());
+
+
+BioMatcherSegmentInfo　versionup
+
+
+   sqlplus -silent /nolog <<EOF
+    conn usrName/Password@Inst;
+    set feedback off;
+    set head off;
+    spool OutPutFileName;
+    select xxxx FROM TableName WHERE yyyy=zzzz;
+    spool off;
+    EOF
+
+ sqlplus -silent /nolog <<EOF
+    conn usrName/Password@Inst;
+    set feedback off;
+    set head off;
+    spool OutPutFileName;
+    select xxxx FROM TableName WHERE yyyy=zzzz;
+    spool off;
+    EOF
+
+--------------------------------------
+
+
+declare
+
+  p_accountnum  varchar2(100);
+
+  p_groupid     integer;
+
+  p_recordcount integer;
+
+  p_select      varchar2(500);
+
+begin
+
+  p_accountnum := 'gh_xxxxxxxxx';
+
+  p_groupid    := 109;
+
+  p_select     := 'select count(*) from wxuser where 1=1 and accountnum =''' ||  p_accountnum || ''' and groupid =' || p_groupid;
+
+  execute immediate p_select into p_recordcount;
+
+  dbms_output.put_line(p_recordcount);
+
+end;
+
+
+---------------------------------------------------
+
+
+begin 
+   execute immediate 'set role all'; 
+end;
+
+begin 
+   execute immediate 'set role all'; 
+end;
+
+
+给动态语句传值(USING 子句) 
+Sql代码
+declare 
+   l_depnam varchar2(20) := 'testing'; 
+   l_loc     varchar2(10) := 'D?i'; 
+   begin 
+   execute immediate 'insert into dept vals   (:1, :2, :3)' 
+     using 50, l_depnam, l_loc; 
+   commit; 
+end;
+
+从动态语句检索值(INTO子句) 
+Sql代码 
+declare 
+   l_cnt  varchar2(20); 
+begin 
+   execute immediate 'select count(1) from emp' 
+     into l_cnt; 
+   dbms_output.put_line(l_cnt); 
+end;
+
+
+动态调用例程.例程中用到的绑定变量参数必须指定参数类型. 
+黓认为IN类型,其它类型必须显式指定 
+Sql代码 
+declare 
+   l_routin    varchar2(100) := 'gen2161.get_rowcnt'; 
+   l_tblnam    varchar2(20) := 'emp'; 
+   l_cnt       number; 
+   l_status    varchar2(200); 
+begin 
+   execute immediate 'begin ' || l_routin || '(:2, :3, :4); end;' 
+     using in l_tblnam, out l_cnt, in out l_status;
+
+   if l_status != 'OK' then 
+      dbms_output.put_line('error'); 
+   end if; 
+end;
+
+将返回值传递到PL/SQL记录类型;同样也可用%rowtype变量 
+Sql代码 
+declare 
+   type empdtlrec is record (empno   number(4), 
+                            ename   varchar2(20), 
+                            deptno   number(2)); 
+   empdtl empdtlrec; 
+begin 
+   execute immediate 'select empno, ename, deptno ' || 
+                    'from emp where empno = 7934' 
+     into empdtl; 
+end;
+
+
+传递并检索值.INTO子句用在USING子句前 
+Sql代码 
+declare 
+   l_dept     pls_integer := 20; 
+   l_nam      varchar2(20); 
+   l_loc      varchar2(20); 
+begin 
+   execute immediate 'select dname, loc from dept where deptno = :1' 
+     into l_nam, l_loc 
+     using l_dept ; 
+end;
+
+多行查询选项.对此选项用insert语句填充临时表， 
+用临时表进行进一步的处理,也可以用REF cursors纠正此缺憾. 
+Sql代码 
+declare 
+   l_sal  pls_integer := 2000; 
+begin 
+   execute immediate 'insert into temp(empno, ename) '||'select empno, ename from emp '||'where sal > :1' 
+     using l_sal; 
+   commit; 
+end;
+
+
+create or replace procedure proc_test
+(
+table_name in varchar2, --表名
+field1 in varchar2, --字段名
+datatype1 in varchar2, --字段类型
+field2 in varchar2, --字段名
+datatype2 in varchar2 --字段类型
+) as
+str_sql varchar2(500);
+begin
+str_sql:=’create table ’||table_name||’(’||field1||’ ’||datatype1||’,’||field2||’ ’||datatype2||’)’;
+execute immediate str_sql; --动态执行DDL语句
+exception
+when others then
+null;
+end ;
+
+SQL> execute proc_test(’dinya_test’,’id’,’number(8) not null’,’name’,’varchar2(100)’);
+PL/SQL procedure s?ssfully completed
+SQL> desc dinya_test;
+Name Type Nullable Default Comments 
+---- ------------- -------- ------- -------- 
+ID NUMBER(8)
+NAME VARCHAR2(100) Y
+SQL>
+
+
+eclare
+p_id number:=1;
+v_count number;
+begin
+v_string:=’select count(*) from table_name a where a.id=:id’;
+execute immediate v_string into v_count using p_id; 
+end ;
+
+
+http://blog.sina.com.cn/s/blog_71f010d20101mo6q.html
+
+
+http://oracle.se-free.com/
+
+https://www.magata.net/memo/index.php?PL%2FSQL
+
+TYPE tArrayINT IS TABLE OF VARCHAR2(10) INDEX BY BINARY_INTEGER;
+	TYPE tArraySTR IS TABLE OF VARCHAR2(20) INDEX BY VARCHAR2(5);
+
+
+DECLARE
+	-- ここから
+	TYPE tID_NAME IS RECORD (
+		id	NUMBER		NOT NULL DEFAULT -1,
+		name	VARCHAR(8)	DEFAULT 'ななし'
+	);
+	-- ここまで
+	vID_NAME	tID_NAME;
+BEGIN
+	vID_NAME.ID := 1;
+	DBMS_OUTPUT.PUT_LINE(vID_NAME.ID || '.' || vID_NAME.NAME);
+END;
+/
+
+DECLARE
+	-- ここから
+	vUser	USER_MASTER%ROWTYPE;
+	-- ここまで
+BEGIN
+	SELECT * INTO vUser FROM USER_MASTER
+	 WHERE ROWNUM <= 1;
+	DBMS_OUTPUT.PUT_LINE(vUser.USER_NAME);
+END;
+/
+
+insert into KF_SEC_USER (USER_ID, GROUP_ID, EXTSYS_USER_ID, USER_NAME, USER_CNAME, PWD, MOBILE, PHONE, EMAIL, DESCRIPTION, ENABLED, HIS_ID, ROLES, TERMINAL_ID) 
+values (sys_guid(), '001', null,'admintest'||m, 'admin', '96E79218965EB72C92A549DD5A330112', '13560316185', null, null, null, null, null, null, null);
+
+    commit; 
+  end loop; 
+--输出结束时间 
+  dbms_output.put_line('end:'||sysdate); 
+end;
+第二种方法：
+--创建存储过程语句 
+CREATE OR REPLACE PROCEDURE p_insert 
+IS
+
+--批量提交参数 
+num NUMBER;  
+BEGIN 
+    FOR i IN 1..10000000 LOOP
+
+--插入语句 
+       insert into USERINFO (ID, NAME, AGE, ADDRESS, OCCUPATION_NAME) 
+values (1, 'ouhy', 25, '广东省佛山市南海区XXXX公司', '测试工程师);   --执行插入 
+        num:=num+1;
+
+  --5000笔提交一次，分批量提交，及时释放redo log buffer 
+        IF Mod(num,5000)=0 THEN 
+           COMMIT; 
+        END IF; 
+    END LOOP; 
+END;
+
+--执行语句
+
+begin 
+  p_insert; 
+commit; 
+  end;
+
+Best Regards，
+
+第二种方法：
+--创建存储过程语句 
+CREATE OR REPLACE PROCEDURE p_insert 
+IS
+
+--批量提交参数 
+num NUMBER;  
+BEGIN 
+    FOR i IN 1..10000000 LOOP
+
+--插入语句 
+       insert into USERINFO (ID, NAME, AGE, ADDRESS, OCCUPATION_NAME) 
+values (1, 'ouhy', 25, '广东省佛山市南海区XXXX公司', '测试工程师);   --执行插入 
+        num:=num+1;
+
+  --5000笔提交一次，分批量提交，及时释放redo log buffer 
+        IF Mod(num,5000)=0 THEN 
+           COMMIT; 
+        END IF; 
+    END LOOP; 
+END;
+
+--执行语句
+
+begin 
+  p_insert; 
+commit; 
+  end;
+
+Best Regards，
+
+https://docs.oracle.com/cd/A97630_01/appdev.920/a96624/a_samps.htm
+
+
+SYSDATE
+
+
+$ sqlplus sh/oracle12345@localhost:1521/poco
+SQL> 
+-- 元のSALES表を別名に変更
+rename SALES to SALES_ORG;
+
+-- ダミー列を2つ追加した新たなSALES表（非パーティション表）を作成
+CREATE TABLE "SH"."SALES"
+   (    "PROD_ID" NUMBER NOT NULL ENABLE,
+        "CUST_ID" NUMBER NOT NULL ENABLE,
+        "TIME_ID" DATE NOT NULL ENABLE,
+        "CHANNEL_ID" NUMBER NOT NULL ENABLE,
+        "PROMO_ID" NUMBER NOT NULL ENABLE,
+        "QUANTITY_SOLD" NUMBER(10,2) NOT NULL ENABLE,
+        "AMOUNT_SOLD" NUMBER(10,2) NOT NULL ENABLE,
+        "DUMMY1" CHAR(100),
+        "DUMMY2" CHAR(110)
+   );
+
+-- 元のSALES表（SALES_ORG）から新規作成したSALES表へレコードをコピー
+insert /*+append */ into SH.SALES
+  nologging
+    select PROD_ID,
+           CUST_ID,
+           TIME_ID+15*365+3, -- 年月日のデータを15年間進める
+           CHANNEL_ID,
+           PROMO_ID,
+           QUANTITY_SOLD,
+           AMOUNT_SOLD,
+           rpad(to_char(mod(CUST_ID,30)),100,'dummy1'),
+           rpad(to_char(mod(CUST_ID,30)),110,'dummy2')
+      from SH.SALES_ORG;
+commit;
+
+-- データ容量（レコード数）を256MBから約32GBまで増加
+alter session force parallel dml parallel 8 ;
+alter session force parallel query parallel 8 ;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+insert /*+append */ into SH.SALES nologging select * from SH.SALES;
+commit;
+
+col segment_name for a32
+select SEGMENT_NAME, BYTES/1024/1024 from USER_SEGMENTS where SEGMENT_NAME='SALES' ;
+
+SEGMENT_NAME                     BYTES/1024/1024
+-------------------------------- ---------------
+SALES                                  31739.125
+
+このようなINSERTの処理を、バルク処理で行う場合、FORALL文を指定して実行します。
+DECLARE    -- ①
+ TYPE c_id_t IS TABLE OF customer.c_id%TYPE
+ INDEX BY PLS_INTEGER;
+ c_id c_id_t; 
+ TYPE c_name_t IS TABLE OF customer.c_name%TYPE
+ INDEX BY PLS_INTEGER;
+ c_name c_name_t;
+BEGIN
+ FOR i IN  1..200000  LOOP        -- ②
+   c_id(i) := i;
+   c_name(i) := '顧客名_'||LPAD(TO_CHAR(i),8,'0');
+ END LOOP;
+  FORALL j IN 1..200000
+   INSERT INTO customer(c_id, c_name) VALUES(c_id(j), c_name(j));       -- ③
+END;
+/
+
+ BEGIN
+      -- BULK INSERT 処理
+      FORALL i in 1..vIDName.COUNT SAVE EXCEPTIONS  -- ← エラーが発生しても継続
+        INSERT INTO USER_MASTER_COPY VALUES vIDName(i);
+        --   Oracle 9i から使用できる記述 ↑
+      COMMIT;
+    EXCEPTION
+      WHEN eBulkProcessNotComplete THEN
+        vBulkErrors := vBulkErrors + SQL%BULK_EXCEPTIONS.COUNT;
+        -- PROC_BULK_ERROR_HANDLER;
+    END;
+
+ FETCH cIDName BULK COLLECT INTO vIDName LIMIT BULK_SIZE;
+1. 实例
+（1）insert 加速
+insert into /*+ append parallel nologging */ dcustcomposmsg 
+select /*+ parallel(e,18)*/ * from dcustcomposmsg_new e; 
+commit;
+（2）select create加速
+CREATE TABLE TEMP_DCUST_GRADE  NOLOGGING PARALLEL 10 AS
+                   SELECT /*+PARALLEL(D,10)*/ *
+                    FROM DCUST_BASIC_INFO_D PARTITION (P_'||V_TOLL_NO||') D 
+                   WHERE EXISTS(SELECT ''A'' FROM DCUSTHIGH PARTITION (P_'||V_REGION_CODE||') A
+                   WHERE D.ID_NO = A.ID_NO )
+2. 用途
+强行启用并行度来执行当前SQL。这个在Oracle 9i之后的版本可以使用，之前的版本现在没有环境进行测试。也就是说，加上这个说明，可以强行启用Oracle的多线程处理功能。举例的话，就像电脑装了多核的CPU，但大多情况下都不会完全多核同时启用（2核以上的比较明显），使用parallel说明，就会多核同时工作，来提高效率。但本身启动这个功能，也是要消耗资源与性能的。所有，一般都会在返回记录数大于100万时使用，效果也会比较明显。3. 语法/*+parallel(table_short_name,cash_number)*/这个可以加到insert、delete、update、select的后面来使用（和rule的用法差不多，有机会再分享rule的用法）开启parallel功能的语句是：alter session enable parallel dml;这个语句是DML语句哦，如果在程序中用，用execute的方法打开。4. 实例说明用ERP中的transaction来说明下吧。这个table记录了所有的transaction，而且每天数据量也算相对比较大的（根据企业自身业务量而定）。假设我们现在要查看对比去年一年当中每月的进、销情况，所以，一般都会写成：select to_char(transaction_date,'yyyymm') txn_month,       sum(        decode(            sign(transaction_quantity),1,transaction_quantity,0              )          ) in_qty,       sum(        decode(            sign(transaction_quantity),-1,transaction_quantity,0              )          ) out_qty  from mtl_material_transactions mmtwhere transaction_date >= add_months(                            to_date(                                    to_char(sysdate,'yyyy')||'0101','yyyymmdd'),                                -12)   and transaction_date <= add_months(                            to_date(                                to_char(sysdate,'yyyy')||'1231','yyyymmdd'),                                -12)group by to_char(transaction_date,'yyyymm') 这个SQL执行起来，如果transaction_date上面有加index的话，效率还算过的去；但如果没有加index的话，估计就会半个小时内都执行不出来。这是就可以在select 后面加上parallel说明。例如：select /*+parallel(mmt,10)*/       to_char(transaction_date,'yyyymm') txn_month,...这样的话，会大大提高执行效率。如果要将检索出来的结果insert到另一个表tmp_count_tab的话，也可以写成：insert /*+parallel(t,10)*/  into tmp_count_tab(    txn_month,    in_qty,    out_qty)select /*+parallel(mmt,10)*/       to_char(transaction_date,'yyyymm') txn_month,...插入的机制和检索机制差不多，所以，在insert后面加parallel也会加速的。关于insert机制，这里暂不说了。Parallel后面的数字，越大，执行效率越高。不过，貌似跟server的配置还有oracle的配置有关，增大到一定值，效果就不明显了。所以，一般用8,10,12,16的比较常见。我试过用30，发现和16的效果一样。不过，数值越大，占用的资源也会相对增大的。如果是在一些package、function
+ or procedure中写的话，还是不要写那么大，免得占用太多资源被DBA开K。  5. Parallel也可以用于多表多表的话，就是在第一后面，加入其他的就可以了。具体写法如下：/*+parallel(t,10) (b,10)*/6. 小结关于执行效率，建议还是多按照index的方法来提高效果。Oracle有自带的explan road的方法，在执行之前，先看下执行计划路线，对写好的SQL tuned之后再执行。实在没办法了，再用parallel方法。Parallel比较邪恶，对开发者而言，不是好东西，会养成不好习惯，导致很多bad
+ SQL不会暴漏，SQL Tuning的能力得不到提升。我有见过某些人create table后，从不create index或primary key，认为写SQL时加parallel就可以了。
+--------------------- 
+
+ 
+ret=`sqlplus -s / as sysdba << END
+set head off;
+select sysdate from dual;
+exit;
+END`
+
+echo $ret
+
+
+https://qiita.com/yukihigasi/items/481dd687e5a4ce0e2f3c
+
+
+
