@@ -1,0 +1,7 @@
+﻿http://chiroito.hatenablog.jp/entry/スタンドアロン・サーバー用のASMの構築%2811_2_0%29
+
+ASM 翻译系列
+
+https://blog.csdn.net/kkdelta/article/details/7194686
+
+https://blog.csdn.net/leshami/article/details/6080659
