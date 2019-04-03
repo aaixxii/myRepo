@@ -48,7 +48,7 @@
         <artifactId>axis2-java2wsdl-maven-plugin</artifactId>
         <configuration>
           <className>com.nec.biomatcher.spec.services.webservices.BioMatcherWebservice</className>
-          <serviceName>BioMatcherWebservice.wsdl</serviceName>
+          <outputFileName>${project.build.directory}/BioMatcherWebservice.wsdl</outputFileName> 
         </configuration>
         <executions>
           <execution>
