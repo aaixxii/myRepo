@@ -1,0 +1,9 @@
+In deleteExtractionJob: Deleting incomplete job with jobId
+
+java -jar eurekaserver-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer1
+
+java -jar eurekaserver-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer2 
+
+mvn spring-boot:run -Drun.profiles=peer1
+
+https://github.com/hansonwang99?tab=repositories
