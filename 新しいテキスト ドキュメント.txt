@@ -1,0 +1,111 @@
+
+https://howtodoinjava.com/spring-cloud/spring-boot-ribbon-eureka/
+
+
+
+java -jar eurekaserver-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer1
+
+java -jar eurekaserver-0.0.1-SNAPSHOT.jar --spring.profiles.active=peer2 
+
+mvn spring-boot:run -Drun.profiles=peer1
+
+
+mvn clean install
+
+java -jar -Dserver.port=XXXX target/YYYYY.jar
+
+http://localhost:8761/ 
+
+
+
+https://github.com/hansonwang99?tab=repositories
+
+https://windmt.com/2018/04/14/spring-cloud-1-services-governance/
+
+ http://localhost:8888/client/frontend 
+
+mvn clean install
+
+java -jar -Dserver.port=XXXX target/YYYYY.jar
+
+http://localhost:8761/ 
+
+
+eureka:8761
+
+
+ribbon client:8888
+ribbon server:9090
+
+
+java -jar -Dserver.port=XXXX target/YYYYY.jar. We will create 3 instances of this service in ports 9090, 9091 and 9092 ports.
+
+
+java -jar ribbon-eureka-server-0.0.1-SNAPSHOT.jar
+
+java -jar -Dserver.port=9090 ribbon-server-0.0.1-SNAPSHOT.jar
+java -jar -Dserver.port=9091 ribbon-server-0.0.1-SNAPSHOT.jar
+java -jar -Dserver.port=9092 ribbon-server-0.0.1-SNAPSHOT.jar
+
+
+
+java -jar ribbon-client-0.0.1-SNAPSHOT.jar
+
+
+ http://localhost:8888/client/frontend/
+
+ http://localhost:9098/getSchoolDetails/abcschool
+http://localhost:9098/getSchoolDetails/abcschool.
+
+http://localhost:9098/hystrix.stream
+
+http://localhost:9098/hystrix 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@RequestMapping(method = RequestMethod.POST, value = "/data")
+public void acceptData(InputStream dataStream) throws Exception {
+    processText(dataStream);
+}
+
+
+       <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+IOUtils.write(response.getBody(), output);
+
+5.1。启动组件
+做最终的构建使用命令mvn clean install并检查构建是否成功。如果有任何错误，您需要修复这些错误才能继续。一旦我们成功构建了所有maven项目，我们将逐一启动服务。
+首先是Eureka，然后是后端微服务，最后是前端微服务。
+要启动每个微服务，我们将使用'java -jar -Dserver.port = XXXX target / YYYYY.jar'命令。
+5.2。部署多个后端微服务实例
+为此，我们需要为此使用不同的端口，以这种方式在需要传递端口的特定端口中启动服务。
+java -jar -Dserver.port = XXXX target / YYYYY.jar。我们将在端口9090,9091和9092端口中创建此服务的3个实例。
+5.3。验证eureka服务器
+现在转到浏览器中的http：// localhost：8761 /并检查eureka服务器是否正在运行，所有微服务都以所需的实例数进行注册。
+5.4。检查客户端负载均衡是否正常
+在前端微服务中，我们使用RestTemplate调用后端微服务。使用@LoadBalanced注释启用Rest tempate作为客户端负载均衡器。
+现在转到浏览器并打开客户端微服务休息端点http：// localhost：8888 / client / frontend，看看该响应来自任何一个后端实例。
+要理解这个后端服务器正在返回它的运行端口，我们也在客户端微服务响应中显示它。尝试刷新这个URL几次并注意后端服务器的端口不断变化，这意味着客户端负载平衡正在运行。现在尝试添加更多的后端服务器实例并检查它是否也在eureka服务器中注册并最终在功能区中考虑，因为一旦将在eureka中注册并且功能区自动功能区也将向新实例发送请求。
+5.5。在没有服务发现的情况下使用硬代码后端进行测试
+转到前端微服务application.properties文件并启用它。
+application.properties
+server.ribbon.listOfServers =本地主机：9090，本地主机：9091，本地主机：9092
+server.ribbon.eureka.enabled = FALSE
+现在测试客户端URL。您只能从已注册的实例获得响应。现在，如果您在不同端口启动后端微服务的新实例，则在我们在功能区中手动注册之前，Ribbon不会向新实例发送请求。
+如果您在测试时遇到困难，我建议您从所有应用程序中删除所有与eureka相关的配置，并停止eureka服务器。希望你也不会在测试中遇到任何困难。
