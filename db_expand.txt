@@ -1,0 +1,17 @@
+﻿EVENT_ID_OFFSET_INFO
+
+MeghaTemplateParserに、add
+
+	public final void setEventId(String evnetId, ByteBuffer templateBuffer) {
+		templateBuffer.position(EVENT_ID_OFFSET_INFO.START_POSITION);
+		MeghaTemplateUtil.setStringData(evnetId, EVENT_ID_OFFSET_INFO.SIZE, templateBuffer);
+	}
+
+
+SegmentationUtil：
+
+					if (!biometricEventInfo.getBiometricId().equals(templateBiometricId)) {
+								meghaTemplateParser.setBiometricId(templateBiometricId, ByteBuffer.wrap(templateDataBuff).order(MeghaTemplateUtil.DEFAULT_BYTE_ORDER));
+								meghaTemplateParser.setExternalId(biometricEventInfo.getExternalId(),  ByteBuffer.wrap(templateDataBuff).order(MeghaTemplateUtil.DEFAULT_BYTE_ORDER));
+								meghaTemplateParser.setEventId(biometricEventInfo.getEventId(), ByteBuffer.wrap(templateDataBuff).order(MeghaTemplateUtil.DEFAULT_BYTE_ORDER));	
+							}
