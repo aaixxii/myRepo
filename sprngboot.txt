@@ -1,0 +1,55 @@
+﻿https://course.tianmaying.com/spring-mvc+router#
+
+
+但是在HTML5中，有些标签并不要求闭合，Thymeleaf遇到这样的HTML文件会报错。为了支持HTML5，你可以在Spring Boot的配置文件中增加一行配置：
+
+spring.thymeleaf.mode=LEGACYHTML5
+
+另外为了保证Thymeleaf能够正确的识别HTML5，还需要添加Maven依赖：
+
+<dependency>
+  <groupId>net.sourceforge.nekohtml</groupId>
+  <artifactId>nekohtml</artifactId>
+  <version>1.9.22</version>
+</dependency>
+
+  nohup java -jar xxxx.jar  --Dspring.config.location=application.properties &
+
+
+https://blog.csdn.net/u014359570/article/details/84848954
+
+
+https://blog.csdn.net/u011961421/article/details/78845450
+
+一、导出数据库用mysqldump命令（注意mysql的安装路径，即此命令的路径）：
+1、导出数据和表结构：
+mysqldump -u用户名 -p密码 数据库名 > 数据库名.sql
+#/usr/local/mysql/bin/   mysqldump -uroot -p abc > abc.sql
+敲回车后会提示输入密码
+2、只导出表结构
+mysqldump -u用户名 -p密码 -d 数据库名 > 数据库名.sql
+#/usr/local/mysql/bin/   mysqldump -uroot -p -d abc > abc.sql
+注：/usr/local/mysql/bin/  --->  mysql的data目录
+
+二、导入数据库
+1、首先建空数据库
+mysql>create database abc;
+2、导入数据库
+方法一：
+（1）选择数据库
+mysql>use abc;
+（2）设置数据库编码
+mysql>set names utf8;
+（3）导入数据（注意sql文件的路径）
+mysql>source /home/abc/abc.sql;
+方法二：
+mysql -u用户名 -p密码 数据库名 < 数据库名.sql
+#mysql -uabc_f -p abc < abc.sql
+建议使用第二种方法导入。
+注意：有命令行模式，有sql命令
+
+
+https://blog.csdn.net/catoop/article/details/50501664#
+
+
+
