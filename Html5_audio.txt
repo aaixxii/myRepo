@@ -1,0 +1,273 @@
+https://developer.mozilla.org/zh-CN/docs/Web/Guide/HTML/Using_HTML5_audio_and_video
+
+var mediaElement = document.getElementById('mediaElementID');
+mediaElement.seekable.start();  // 返回开始时间 (in seconds)
+mediaElement.seekable.end();    // 返回结束时间 (in seconds)
+mediaElement.currentTime = 122; // 设定在 122 seconds
+mediaElement.played.end();      // 返回浏览器播放的秒数
+
+标记播放范围
+节
+在给一个<audio>或者<video>元素标签指定媒体的URI的时候，你可以选择性地加入一些额外信息来指定媒体将要播放的部分。要这样做的话，需要附加一个哈希标志("#")，后面跟着媒体片段的描述。
+一条指定时间范围的语句：
+#t=[starttime][,endtime]
+
+时间值可以被指定为秒数（如浮点数）或者为以冒号分隔时/分/秒格式（像2小时5分钟1秒表示为2:05:01）。
+一些例子：
+http://foo.com/video.ogg#t=10,20
+指定视频播放范围为从第10秒到第20秒.
+http://foo.com/video.ogg#t=,10.5
+指定视频从开始播放到第10.5秒.
+http://foo.com/video.ogg#t=,02:00:00
+指定视频从开始播放到两小时.
+http://foo.com/video.ogg#t=60
+指定视频从第60秒播放到结束.
+媒体元素URI中播放范围部分的规范已被加入到 Gecko 9.0 (Firefox 9.0 / Thunderbird 9.0 / SeaMonkey 2.6). 当下, 这是Geoko Media Fragments URI specification 唯一实现的部分，并且只有是在非地址栏给媒体元素指定来源时才可使用。
+
+https://www.cnblogs.com/zyjhandsome/p/9775622.html
+
+var mediaElem = document.getElementById("my-media-element");
+mediaElem.load();
+
+检测轨道的添加和删除
+　　可以监视媒体元素中的曲目列表，以检测何时向元素的媒体添加或删除曲目。例如，您可以观察将音频曲目添加到媒体时addtrack要发送的事件HTMLMediaElement.audioTrackList。
+var mediaElem = document.querySelector("video");
+mediaElem.audioTracks.onaddtrack = function(event) {
+  audioTrackAdded(event.track);
+}
+
+https://developer.mozilla.org/en-US/docs/Web/API/TrackEvent
+
+var videoElem = document.querySelector("video");
+
+videoElem.videoTracks.addEventListener("addtrack", handleTrackEvent, false);
+videoElem.videoTracks.addEventListener("removetrack", handleTrackEvent, false);
+videoElem.audioTracks.addEventListener("addtrack", handleTrackEvent, false);
+videoElem.audioTracks.addEventListener("removetrack", handleTrackEvent, false);
+videoElem.textTracks.addEventListener("addtrack", handleTrackEvent, false);
+videoElem.textTracks.addEventListener("removetrack", handleTrackEvent, false);
+
+function handleTrackEvent(event) {
+  var trackKind;
+
+  if (event.target instanceof(VideoTrackList)) {
+    trackKind = "video";
+  } else if (event.target instanceof(AudioTrackList)) {
+    trackKind = "audio";
+  } else if (event.target instanceof(TextTrackList)) {
+    trackKind = "text";
+  } else {
+    trackKind = "unknown";
+  }
+
+  switch(event.type) {
+    case "addtrack":
+      console.log("Added a " + trackKind + " track");
+      break;
+    case "removetrack":
+      console.log("Removed a " + trackKind + " track");
+      break;
+  }
+}
+
+
+https://github.com/iandevlin/iandevlin.github.io/tree/master/mdn/video-player-with-captions
+
+可以使用WebVTT格式和<track>元素。
+
+
+https://www.cnblogs.com/shihuc/p/9703508.html
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Audio_API
+
+https://github.com/mdn/voice-change-o-matic
+
+
+wavesurfer.js项目地址：https://github.com/katspaugh/wavesurfer.js
+官网地址：http://wavesurfer-js.org/
+要想实现一个音频的波形效果，很简单，按照下面的步骤来就好了！
+
+
+https://www.zhangxinxu.com/wordpress/2018/12/wavesurfer-js-mp3-audio-wave/
+
+
+如果你想实现下图所示的波形图效果，可以借助wavesurfer.js。
+wavesurfer.js项目地址：https://github.com/katspaugh/wavesurfer.js
+官网地址：http://wavesurfer-js.org/
+要想实现一个音频的波形效果，很简单，按照下面的步骤来就好了！
+
+
+<script src="https://unpkg.com/wavesurfer.js"></script>
+var wavesurfer = WaveSurfer.create({
+    container: '#waveform'
+});
+
+wavesurfer.load('../audio/zxx.mp3');
+
+wavesurfer.load('//image.zhangxinxu.com/audio/zxx.mp3');
+
+wavesurfer.play();
+
+wavesurfer.pause();
+
+
+demo页面HTML如下：
+<div id="waveform" class="waveform"></div>
+<a href="javascript:" id="btnPlay" role="button">播放</a>
+<a href="javascript:" id="btnPause" role="button">暂停</a>
+JS代码如下：
+var wavesurfer = WaveSurfer.create({
+    container: '#waveform'
+});
+wavesurfer.load('./zxx-comic-01.mp3');
+// 播放和暂停
+btnPlay.addEventListener('click', function () {
+    wavesurfer.play();
+});
+btnPause.addEventListener('click', function () {
+    wavesurfer.pause();
+});
+
+
+https://github.com/html50/audioVisualizer
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>音声解析</title>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  </head>
+  <body>
+    <button onclick="startRecording()">解析開始</button>
+    <button onclick="endRecording()">解析終了</button>
+    <hr>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <script src="voice_analyse.js"></script>
+  </body>
+</html>
+
+
+voice_analyse.js 
+// クロスブラウザ定義
+navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+// 変数定義
+var localMediaStream = null;
+var localScriptProcessor = null;
+var audioContext = new AudioContext();
+var bufferSize = 1024;
+var audioData = []; // 録音データ
+var recordingFlg = false;
+
+// キャンバス
+var canvas = document.getElementById('canvas');
+var canvasContext = canvas.getContext('2d');
+
+// 音声解析
+var audioAnalyser = null;
+
+
+// 録音バッファ作成（録音中自動で繰り返し呼び出される）
+var onAudioProcess = function(e) {
+    if (!recordingFlg) return;
+
+    // 音声のバッファを作成
+    var input = e.inputBuffer.getChannelData(0);
+    var bufferData = new Float32Array(bufferSize);
+    for (var i = 0; i < bufferSize; i++) {
+        bufferData[i] = input[i];
+    }
+    audioData.push(bufferData);
+
+    // 波形を解析
+    analyseVoice();
+};
+
+// 解析用処理
+var analyseVoice = function() {
+    var fsDivN = audioContext.sampleRate / audioAnalyser.fftSize;
+    var spectrums = new Uint8Array(audioAnalyser.frequencyBinCount);
+    audioAnalyser.getByteFrequencyData(spectrums);
+    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+    canvasContext.beginPath();
+
+    for (var i = 0, len = spectrums.length; i < len; i++) {
+        //canvasにおさまるように線を描画
+        var x = (i / len) * canvas.width;
+        var y = (1 - (spectrums[i] / 255)) * canvas.height;
+        if (i === 0) {
+            canvasContext.moveTo(x, y);
+        } else {
+            canvasContext.lineTo(x, y);
+        }
+        var f = Math.floor(i * fsDivN);  // index -> frequency;
+
+        // 500 Hz単位にy軸の線とラベル出力
+        if ((f % 500) === 0) {
+            var text = (f < 1000) ? (f + ' Hz') : ((f / 1000) + ' kHz');
+            // Draw grid (X)
+            canvasContext.fillRect(x, 0, 1, canvas.height);
+            // Draw text (X)
+            canvasContext.fillText(text, x, canvas.height);
+        }
+    }
+
+    canvasContext.stroke();
+
+    // x軸の線とラベル出力
+    var textYs = ['1.00', '0.50', '0.00'];
+    for (var i = 0, len = textYs.length; i < len; i++) {
+        var text = textYs[i];
+        var gy   = (1 - parseFloat(text)) * canvas.height;
+        // Draw grid (Y)
+        canvasContext.fillRect(0, gy, canvas.width, 1);
+        // Draw text (Y)
+        canvasContext.fillText(text, 0, gy);
+    }
+}
+
+
+// 解析開始
+var startRecording = function() {
+    recordingFlg = true;
+    navigator.getUserMedia({audio: true}, function(stream) {
+        // 録音関連
+        localMediaStream = stream;
+        var scriptProcessor = audioContext.createScriptProcessor(bufferSize, 1, 1);
+        localScriptProcessor = scriptProcessor;
+        var mediastreamsource = audioContext.createMediaStreamSource(stream);
+        mediastreamsource.connect(scriptProcessor);
+        scriptProcessor.onaudioprocess = onAudioProcess;
+        scriptProcessor.connect(audioContext.destination);
+
+        // 音声解析関連
+        audioAnalyser = audioContext.createAnalyser();
+        audioAnalyser.fftSize = 2048;
+        frequencyData = new Uint8Array(audioAnalyser.frequencyBinCount);
+        timeDomainData = new Uint8Array(audioAnalyser.frequencyBinCount);
+        mediastreamsource.connect(audioAnalyser);
+    },
+    function(e) {
+        console.log(e);
+    });
+};
+
+// 解析終了
+var endRecording = function() {
+    recordingFlg = false;
+
+    //audioDataをサーバに送信するなど終了処理
+};
+
+https://qiita.com/mhagita/items/6c7d73932d9a207eb94d
