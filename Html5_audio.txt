@@ -271,3 +271,13 @@ var endRecording = function() {
 };
 
 https://qiita.com/mhagita/items/6c7d73932d9a207eb94d
+
+
+https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement
+
+
+
+https://syncer.jp/Web/API_Interface/Reference/IDL/HTMLMediaElement/seekable/
+
+
+https://developer.mozilla.org/ja/docs/Web/API/HTMLMediaElement
