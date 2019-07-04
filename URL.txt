@@ -1,0 +1,13 @@
+﻿http://127.0.0.1:4000/contents/mp3/aim_audio_3.html
+
+http://127.0.0.1:4000//contents/mp3/Akasagarbha-dharani.mp3
+
+https://apiko.com/blog/audio-file-streaming-in-js/
+
+https://valvesoftware.github.io/steam-audio/doc/capi/page_audio_pipeline.html
+
+https://qiita.com/mhagita/items/6c7d73932d9a207eb94d
+
+https://codepen.io/katspaugh/pen/RrvORw
+
+https://codepen.io/entonbiba/pen/xgmqmv
