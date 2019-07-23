@@ -223,7 +223,7 @@
         container: '#waveform',
         waveColor: 'green',
         fillParent: false, 
-        scrollParent:true,       
+        scrollParent:false,       
         minPxPerSec: 50,
         hideScrollbar: false,
         barHeight: 2,
@@ -279,7 +279,8 @@
         let target = document.getElementById(id);
         let txt = id + " is speaking!!";
         $(target).html(txt);
-        $(target).css("color", "red");        
+        $(target).css("color", "red");  
+        //document.getElementById("canvasWrapper").scrollTo(region.start * 50, region.end *50);      
       });
 
       wavesurfer.on("region-out", function (region) {
@@ -288,7 +289,7 @@
         let txt = id + " speaking out!";
         $(target).html(txt);
         $(target).css("color", "black"); 
-        //document.getElementById("canvasWrapper").scrollTo(region.start, region.end);
+        
               
       });
 
