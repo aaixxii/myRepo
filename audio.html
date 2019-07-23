@@ -17,6 +17,10 @@
     .clear {
       clear: both;
     }
+
+    body {
+      margin: 0;      
+    }
   
     canvas {
       display: block;
@@ -34,7 +38,7 @@
   
     .button {
       border-radius: 12px;
-      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);      
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
   
     .info {
@@ -43,8 +47,8 @@
       height: 100px;
       text-align: center;
       display: flex;
-      flex-direction: row;  
-      align-items:center;
+      flex-direction: row;
+      align-items: center;
       justify-content: center;
       color: black;
       font-size: 200%;
@@ -59,7 +63,7 @@
   
     #waveform {
       margin-top: 2px;
-    }   
+    }
   
     .custom-file {
       overflow: hidden;
@@ -76,17 +80,38 @@
       display: -o-flex;
       display: flex;
     }
-
+  
     #btn_g {
       display: flex;
-      flex-direction: row;  
-      justify-content: center;  
+      flex-direction: row;
+      justify-content: center;
       margin-top: 30px;
-      text-align: center; 
+      text-align: center;
     }
-
+  
     .mybtn {
       margin-right: 5px;
+    }
+  
+    .loading {
+      margin: 0px auto;
+      border-radius: 50%;
+      border: 8px solid #f1f1f1;
+      border-top: 8px solid red;
+      width: 100px;
+      height: 100px;
+      animation: 1.64s loading infinite linear;
+      transform: translate(-50%, -50%)
+    }
+  
+    @keyframes loading {
+      0% {
+        transform: rotate(0)
+      }
+  
+      100% {
+        transform: rotate(360deg)
+      }
     }
   </style>
 
@@ -104,12 +129,16 @@
     <div id = "inputmyfile" class="custom-file">
         <input  type="file" class="custom-file-input" id="audioFile">
         <label  class="custom-file-label" for="customFile" data-browse="Open" style="color:green;font-weight: 900">drag&drop or select a file</label>
-    </div>
-   
+    </div>   
     <div class="clear"></div>
+    <div id="prog"></div>
     <div id="waveform"></div>
     <div class="clear"></div>
     <div id="waveform-timeline"></div>
+    <div class="clear"></div>
+    <div id="canvasWrapper" style="margin-top: 10px;">     
+      <canvas id="audio_canvas" width="100%" height="50px"></canvas>        
+    </div>
     <div class="clear"></div>
     <div id="audioInfo" style="margin-top:5px;display:flex;"> 
     </div>
@@ -124,7 +153,10 @@
    </div> 
    <div id="mute">       
     <button type="button" class="btn btn-info btn-lg mybtn" onclick="wavesurfer.toggleMute()">ToggleMute</button>   
- </div> 
+   </div> 
+   <div id="createSpkInfo">       
+    <button type="button" class="btn btn-primary btn-lg mybtn" onclick="toggleScroll()">ToggleScroll</button>   
+   </div> 
   </div>  
     <div class="clear"></div>   
   <script>
@@ -137,7 +169,11 @@
     var muitSpRegions = [];
     var RegionList = [];
     var hasXmlFile = false;
-    var hasWaveFile = false;
+    var hasWaveFile = false;    
+    var minPxPerSec = 50;
+    var canvas;   
+    var context;
+    var waveformWidth;
 
     const colorArr = [
       'hsla(200, 100%, 30%, 0.3)',
@@ -154,6 +190,7 @@
       window.location.reload();
       hasXmlFile = false;
       hasWaveFile = false;
+      return;
      }
       if (!this.files.length) {
         alert('File is not selected.');
@@ -165,33 +202,44 @@
         fileName.toLowerCase().endsWith("wav")) {
         let url = URL.createObjectURL(file);
         hasWaveFile = true;
-        initWaveSurfer(url);
+        $("#prog").addClass("loading"); 
+        let delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+        (async function run() {
+          initWaveSurfer(url);
+          await delay(1000);
+          $("#prog").removeClass("loading");
+        })(); 
+        
       } else if (fileName.toLowerCase().endsWith("xml")) {
         hasXmlFile = true;
         readXml(this.files, e);
       } else if (fileName.toLowerCase().endsWith("txt")) {
         //readJson(e);
       }
-    });
+    });    
 
     function initWaveSurfer(url) {
       wavesurfer = WaveSurfer.create({
         container: '#waveform',
         waveColor: 'green',
-        fillParent: false,
-        scrollParent: true,
+        fillParent: false, 
+        scrollParent:true,       
         minPxPerSec: 50,
         hideScrollbar: false,
         barHeight: 2,
-        height: 200,
+        height: 200,        
         responsive: true
 
       });
       wavesurfer.load(url);
       wavesurfer.on('ready', function () {
-        totalTime = wavesurfer.getDuration();
-        //var wf = document.getElementById("waveform");
-       // var rt = wf.getBoundingClientRect();
+        totalTime = wavesurfer.getDuration(); 
+        var wf = document.getElementById("waveform");        
+        var rt= wf.getBoundingClientRect();        
+        waveformWidth = rt.left + rt.right;  
+        canvas = document.getElementById("audio_canvas");   
+        context = canvas.getContext("2d");
+        canvas.width = totalTime * 50;   
         timeline = Object.create(WaveSurfer.Timeline);
         timeline.init({
           wavesurfer: wavesurfer,
@@ -225,12 +273,13 @@
       wavesurfer.on('audioprocess', function () {
       });
 
-      wavesurfer.on("region-in", function (region) {
+      wavesurfer.on("region-in", function (region) {        
+        render(region);           
         let id = region.id;
         let target = document.getElementById(id);
         let txt = id + " is speaking!!";
         $(target).html(txt);
-        $(target).css("color", "red");
+        $(target).css("color", "red");        
       });
 
       wavesurfer.on("region-out", function (region) {
@@ -238,7 +287,9 @@
         let target = document.getElementById(id);
         let txt = id + " speaking out!";
         $(target).html(txt);
-        $(target).css("color", "black");
+        $(target).css("color", "black"); 
+        //document.getElementById("canvasWrapper").scrollTo(region.start, region.end);
+              
       });
 
       wavesurfer.on('region-click', function (region, e) {
@@ -482,7 +533,7 @@
                   continue;
                 }
                 reg.play();
-                await delay(500);
+                await delay(800);                
               }
             })();
           });
@@ -493,23 +544,35 @@
         mylab.text(txt);
         mylab.css({ "color": "red", "margin-top": "25px" });
         mylab.appendTo(parentDiv);
-      }   
-    
-    function runder(speekerRegions, pxdps) {
-      var baseH = 150;
-      for (let i in speekerRegions) {
-        let drawH = 20;
-        let spRegion = speekerRegions[i];
-        let name = spRegion.name;
-        let arrs = spRegion.regions;
-        for (let j in arrs) {
-          context.fillStyle = arrs[j].color;
-          context.beginPath();
-          context.fillRect(Math.round(arrs[j].start * pxdps), baseH, Math.round(arrs[j].end * pxdps) - Math.round(arrs[j].start * pxdps), drawH);
-          context.closePath();
-        }
-      }
-    }
+      }    
+   
+
+    function render(region) {     
+       canvas = document.getElementById("audio_canvas");           
+       context = canvas.getContext("2d");
+      // context.translate(0, 0);  
+       context.width = totalTime* 50;   
+       waveformWidth;        
+        // var cs = document.getElementById("audio_canvas");
+        // var csrt = cs.getBoundingClientRect();
+        // var csd = csrt.left + csrt.right;
+        var baseH = 0;
+        let drawH = 50;
+        context.beginPath();
+        context.fillStyle = region.color;
+        let st = region.start;
+        let ed = region.end;
+        context.fillRect(st * 50, baseH, (ed - st) * 50, drawH);
+        context.save();
+        context.closePath();
+        context.beginPath();
+        context.fillStyle = "green";
+        context.font = '24pt Calibri';
+        context.fillText(st+":" + ed, st * 50 + ((ed - st) * 50)/2 - 10, drawH -12);
+        context.closePath();
+        context.restore();        
+      } 
+   
 
     function Region(id, start, end, color) {
       this.id = id;
@@ -525,6 +588,11 @@
       } else {
         this.regions = [];
       }
+    }
+
+    function toggleScroll() {
+      wavesurfer.toggleScroll();
+      wavesurfer.toggleScroll();
     }
 
     function readXml(fileList, evt) {
