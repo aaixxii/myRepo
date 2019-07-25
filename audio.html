@@ -24,7 +24,7 @@
   
     canvas {
       display: block;
-    }
+    }        
   
     .material-icons.md-40 {
       font-size: 40px;
@@ -44,14 +44,14 @@
     .info {
       margin: 10px;
       width: 300px;
-      height: 100px;
+      height: 50px;
       text-align: center;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       color: black;
-      font-size: 200%;
+      font-size: 150%;
     }
   
     #inputmyfile {
@@ -85,8 +85,16 @@
       display: flex;
       flex-direction: row;
       justify-content: center;
-      margin-top: 30px;
+      margin-top: 20px;
       text-align: center;
+    }
+
+    #audioInfo {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      margin-top:5px; 
+      padding-left: 160px;     
     }
   
     .mybtn {
@@ -113,6 +121,32 @@
         transform: rotate(360deg)
       }
     }
+
+    #table_container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    #spkTab {
+      padding-left: 10px;
+      padding-top: 5px;
+      width: 100%;
+      display: table-cell;	
+      vertical-align: middle; 
+      text-align: center;      
+    }
+
+    .mycell {
+      width :300px;
+      white-space: nowrap;
+
+    }
+
+    #spkTab table tr td {
+      white-space: nowrap;
+    }
+
+ 
   </style>
 
   <title>H5 Audio Demo</title>
@@ -121,14 +155,13 @@
     <nav class="navbar navbar-expand-md navbar-info bg-info fixed-top">
         <a class="navbar-brand" href="#">NEC AIM</a>
     </nav>
-    
-    <label for="file" id="dragandrophandler" style="color:red; text-align:left; margin-top:2px;font-size: 200%;">
-        drag&drop or select a file 
-    </label>
+    <nav class="navbar navbar-light mb-2" style="background-color:#e3f2fd;margin-top: 60px;">
+      <a href="http://localhost:8080/audio/openTool" class="navbar-brand">Open Tool</a>
+    </nav>
 
     <div id = "inputmyfile" class="custom-file">
         <input  type="file" class="custom-file-input" id="audioFile">
-        <label  class="custom-file-label" for="customFile" data-browse="Open" style="color:green;font-weight: 900;font-size: 150%;display:block;line-height:100%">drag&drop or select a file</label>
+        <label  class="custom-file-label" for="customFile" data-browse="Open" style="color:green;font-weight: 900">drag&drop or select a file</label>
     </div>   
     <div class="clear"></div>
     <div id="prog"></div>
@@ -140,7 +173,7 @@
       <canvas id="audio_canvas" width="100%" height="50px"></canvas>        
     </div>
     <div class="clear"></div>
-    <div id="audioInfo" style="margin-top:5px;display:flex;"> 
+    <div id="audioInfo"> 
     </div>
     <div class="clear"></div>
     <div id="btn_g">
@@ -151,15 +184,25 @@
     <div id="stop">       
       <button type="button" class="btn btn-danger btn-lg mybtn" onclick="doStop()">&nbsp;&nbsp;&nbsp;Stop&nbsp;&nbsp;&nbsp;</button>   
    </div> 
-   <div id="mute">       
-    <button type="button" class="btn btn-info btn-lg mybtn" onclick="wavesurfer.toggleMute()">ToggleMute</button>   
-   </div> 
+   <div>       
+    <button id="mute" type="button" class="btn btn-info btn-lg mybtn" onclick="toggleMute()">ToggleMute</button>   
+   </div>
    <div id="createSpkInfo">       
-    <button type="button" class="btn btn-primary btn-lg mybtn" onclick="toggleScroll()">ToggleScroll</button>   
+    <button type="button" class="btn btn-warning btn-lg mybtn" onclick="createSpkInfo()">SpeakerInfo</button>   
+   </div>
+   <div id="clear">       
+    <button type="button" class="btn btn-primary btn-lg mybtn" onclick="clearInfo()">ClearInfo</button>   
+   </div> 
+   <div id="createTab">       
+    <button type="button" class="btn btn-dark btn-lg mybtn" onclick=" createTable()">CreateTable</button>   
    </div> 
   </div>  
-    <div class="clear"></div>   
-  <script>
+    <div class="clear"></div>  
+    <div id="table_container"> 
+      <div id="tabTitle"></div>          
+      <div id="spkTab"></div> 
+    </div> 
+  <script>    
     var wavesurfer;
     var timeline;
     var totalTime;
@@ -168,6 +211,8 @@
     var seconds = 1.00;
     var muitSpRegions = [];
     var RegionList = [];
+    var speakerColorList = [];
+    var spkRegionList = [];
     var hasXmlFile = false;
     var hasWaveFile = false;    
     var minPxPerSec = 50;
@@ -180,6 +225,8 @@
       'hsla(400, 100%, 30%, 0.3)',
       'hsla(120,65%,75%,0.3)',
       'hsla(250,65%,75%,0.3)',
+      'hsla(180,50%,50%,0.3)',
+      'hsla(300, 90%, 30%, 0.2)',
       'hsla(120, 100 %, 50%, 0.3)'
       ];
 
@@ -197,7 +244,7 @@
         return;
       }     
       let file = this.files[0];
-      var fileName = file.name;
+      let fileName = file.name;
       if (fileName.toLowerCase().endsWith("mp3") ||
         fileName.toLowerCase().endsWith("wav")) {
         let url = URL.createObjectURL(file);
@@ -212,6 +259,7 @@
         
       } else if (fileName.toLowerCase().endsWith("xml")) {
         hasXmlFile = true;
+        readXmlNew(this.files, e);
         readXml(this.files, e);
       } else if (fileName.toLowerCase().endsWith("txt")) {
         //readJson(e);
@@ -223,7 +271,7 @@
         container: '#waveform',
         waveColor: 'green',
         fillParent: false, 
-        scrollParent:false,       
+        scrollParent:true,       
         minPxPerSec: 50,
         hideScrollbar: false,
         barHeight: 2,
@@ -264,7 +312,9 @@
           let tmp = muitSpRegions[i];
           let arrs = tmp.regions;
           for (let i in arrs) {
-            let reg = wavesurfer.addRegion(arrs[i]);
+            let tmp = arrs[i];
+            tmp.id = tmp.id +"-" + tmp.start;
+            let reg = wavesurfer.addRegion(tmp);
             RegionList.push(reg);            
           }
         }       
@@ -274,10 +324,12 @@
       });
 
       wavesurfer.on("region-in", function (region) {        
-        render(region);           
+        //render(region);           
         let id = region.id;
-        let target = document.getElementById(id);
-        let txt = id + " is speaking!!";
+        let index = id.indexOf('-');
+        let name = id.substring(0,index);
+        let target = document.getElementById(name);
+        let txt = name + " is speaking!!";
         $(target).html(txt);
         $(target).css("color", "red");  
         //document.getElementById("canvasWrapper").scrollTo(region.start * 50, region.end *50);      
@@ -285,8 +337,10 @@
 
       wavesurfer.on("region-out", function (region) {
         let id = region.id;
-        let target = document.getElementById(id);
-        let txt = id + " speaking out!";
+        let index = id.indexOf('-');
+        let name = id.substring(0,index);
+        let target = document.getElementById(name);
+        let txt = name + " speaking out!";
         $(target).html(txt);
         $(target).css("color", "black"); 
         
@@ -303,11 +357,27 @@
     } //end int wavessurfer
 
     function myplay() {
-      wavesurfer.playPause();
-    }
+        if (!wavesurfer.params.scrollParent) {
+          wavesurfer.toggleScroll();
+        }
+        clearInfo();
+        wavesurfer.playPause();
+      }
 
     function doStop() {
       wavesurfer.stop();      
+    }
+
+    function toggleMute() {
+      wavesurfer.toggleMute();
+      let muteBtn = $("#mute");
+      if (wavesurfer.isMuted) {
+        muteBtn.prop('title', 'not muted');
+        muteBtn.html('SetToNoMute');
+      } else {
+        muteBtn.html('SetToMute');
+        muteBtn.prop('title', 'muted');
+      }
     }
 
     function clearAll() {
@@ -318,6 +388,9 @@
         //wavesurfer.destroy();
     }
 
+    function toggleScroll() {
+      wavesurfer.toggleScroll();      
+    }
 
     function playRegion() {
       //var region = $(".wavesurfer-region"); 
@@ -334,7 +407,89 @@
             wavesurfer.playPause();           
           }
         }
+      }
 
+      function playByButton(ev) {
+        let row = $(ev).parent().parent().prevAll().length;
+        let col = $(ev).parent().prevAll().length;      
+        let tab = document.getElementById("spkTab").childNodes[0];
+        let spname = tab.rows[row].cells[0].innerHTML;
+        let value = tab.rows[0].cells[col].innerHTML; 
+        let arr = value.split("-"); 
+        let start = arr[0];
+        let end = arr[1];  
+        let delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+        (async function loop() {
+          for (let i =0; i< muitSpRegions.length; i++) {
+          let test = muitSpRegions[i];
+          let name = test.name;
+          if (spname ===name) {
+            let  regins = test.regions;
+            for (let j = 0; j < regins.length; j++) {
+              let rg =regins[j];
+              let st = rg.start;
+              if (st === start) {
+               // wavesurfer.seekTo(start/totalTime);
+                wavesurfer.play(start, end); 
+                await delay(800);                
+                return;  
+              }
+            }          
+          } 
+        }  
+        })();
+
+      }
+      
+
+      function createTable() {
+        var container = $("#table_container"); 
+        let cap = "<h2>Speaker Info Table</>";
+        $("#tabTitle").html(cap);
+
+        var table=$("<table border=\"1\">"); 
+        //let cap = $("<caption>Speaker List</caption>");
+        //cap.attr("caption-side", "top");
+        //cap.appendTo(table);      
+        table.appendTo($("#spkTab"));
+        
+        let tr0=$("<tr></tr>");
+        tr0.appendTo(table);
+        let td0=$("<td>"+"Speaker"+"</td>");        
+        td0.attr('noWarp','noWrap');
+        td0.css("color", "black");
+        td0.appendTo(tr0);       
+        for (let i = 0; i < spkRegionList.length; i++ ) {
+          let reg =spkRegionList[i];
+          let txt = reg.start + "-" + reg.end;
+          let td=$("<td></td>"); 
+          td.html(txt); 
+          td.addClass('mycell');
+          td.css("color", "blue");
+          td.appendTo(tr0);
+        }
+        let rowCount = speakerColorList.length;
+        for (let j = 0; j <rowCount; j++) {
+          let name = speakerColorList[j].id;
+          let ftr= $("<tr></tr>");
+          let ftd=$("<td>"+name+"</td>");          
+          ftd.attr('noWarp','noWrap');
+          ftd.css("color", "red");
+          ftd.appendTo(ftr);         
+          for (let k = 0; k < spkRegionList.length; k++) {
+            let one =  spkRegionList[k];
+            let td=$("<td></td>");            
+            td.css("white-space", "nowrap"); 
+            if (one.id === name) {
+              let btn = $("<button type='button' class='btn btn-outline-success'>Play</button>"); 
+              btn.attr('onClick', 'playByButton(this);');                   
+              td.append(btn);
+            }
+            td.appendTo(ftr);
+            ftr.appendTo(table);
+          }
+        }       
+        
       }
 
     function formatTimeCallback(seconds, pxPerSec) {
@@ -530,7 +685,9 @@
               for (let j in RegionList) {
                // await delay(500);
                 let reg = RegionList[j];
-                if (!(reg.id === objTarget.id)) {
+                let index = reg.id.indexOf('-');
+                let name = reg.id.substring(0,index);
+                if (!(name === objTarget.id)) {
                   continue;
                 }
                 reg.play();
@@ -538,14 +695,28 @@
               }
             })();
           });
+        }        
+        // let txt = "Total Speaker:" + muitSpRegions.length;
+        // let labdiv = $('<div></div>');
+        // labdiv.attr('id', 'labdiv');
+        // labdiv.addClass('info');
+        // labdiv.text(txt);        
+        // labdiv.css({ "color": "red"});
+        // labdiv.css({ "background-color": "green"});
+        // labdiv.appendTo(parentDiv);
+      } 
+
+      function createSpkInfo () {
+        if(wavesurfer.params.scrollParent) {
+          wavesurfer.toggleScroll();
         }
-        let mylab = $('<lable></lable>');
-        let txt = "Total Speaker:" + muitSpRegions.length;
-        mylab.addClass('info');
-        mylab.text(txt);
-        mylab.css({ "color": "red", "margin-top": "25px" });
-        mylab.appendTo(parentDiv);
-      }    
+        let temp =wavesurfer.params.scrollParent;
+        for (let j in RegionList) {
+          let one = RegionList[j];
+          render(one);
+        }
+
+      } 
    
 
     function render(region) {     
@@ -573,12 +744,27 @@
         context.closePath();
         context.restore();        
       } 
-   
+
+      function clearInfo() {
+        // const  infoDiv = document.getElementById("audioInfo");  
+        // for (let i = 0; i < infoDiv.children.length; i++) {
+        //   let subDiv = infoDiv.children[i];
+        //   subDiv.innerHTML = "";
+        // }         
+       canvas = document.getElementById("audio_canvas");           
+       context = canvas.getContext("2d");
+       context.clearRect(0, 0, canvas.width, canvas.height);
+      }   
 
     function Region(id, start, end, color) {
       this.id = id;
       this.start = start;
       this.end = end;
+      this.color = color;
+    }
+
+    function SpeakerColor(name, color) {
+      this.id = name;
       this.color = color;
     }
 
@@ -591,10 +777,50 @@
       }
     }
 
-    function toggleScroll() {
-      wavesurfer.toggleScroll();
-      wavesurfer.toggleScroll();
-    }
+    function readXmlNew(fileList, evt) {
+        if (!fileList.length) {
+          alert('File is not selected.');
+          return;
+        }
+        var fileToLoad = evt.target.files[0];
+        if (fileToLoad) {
+          var reader = new FileReader();
+          reader.onload = function (fileLoadedEvent) {
+            var data = fileLoadedEvent.target.result;
+            var x2js = new X2JS();
+            var jsonTmp = x2js.xml_str2json(data);
+            var spList = jsonTmp.speakerList;   
+            var set =  new Set();            
+            for (let i = 0; i < spList.speaker.length; i++) {
+              set.add(spList.speaker[i]._name);
+            } 
+            var colorIndex = 0;
+            set.forEach(x =>{
+              let spkClr = new SpeakerColor(x,  colorArr[colorIndex]);
+              speakerColorList.push( spkClr);
+              colorIndex++;
+            });
+            for (let i = 0 ; i < spList.speaker.length; i++) {              
+                  let temp = spList.speaker[i];
+                  let name = temp._name;
+                  let start = temp._start;
+                  let end = temp._end;
+                  spkRegionList.push(new Region(name, start, end, getColor(name)));
+              }            
+           // alert(spkRegionList.length);
+            
+          };
+          reader.readAsText(fileToLoad, 'UTF-8');
+        }
+      } //end readXmlNew  
+
+      function getColor(id) {
+        for (let one in  speakerColorList) {
+          if (speakerColorList[one].name === id) {
+            return speakerColorList[one].color;
+          }
+        }
+      }
 
     function readXml(fileList, evt) {
         if (!fileList.length) {
@@ -691,6 +917,7 @@
     }
 
     $(document).ready(function () {
+      $("#mute").prop('title', 'no muted');
     });
   </script>
 </body>
