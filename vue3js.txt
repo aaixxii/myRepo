@@ -1,0 +1,30 @@
+﻿npm uninstall vue-cli -g 
+
+
+
+npm install -g @vue/cli
+
+npm global add@vue/cli-service-global
+
+vue serve 
+
+vue serve mycomponet
+
+vue build
+
+cd dist
+
+http-server .
+
+vue build mycomponet
+http-server .
+
+lession2
+
+vue create hello-world
+
+yarn lint
+yarn --help
+
+vue ui
+
