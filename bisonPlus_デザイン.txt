@@ -1,0 +1,37 @@
+FastDFS is an open source high performance distributed file system (DFS). 
+It's major functions include: file storing, file syncing and file accessing,
+ and design for high capacity and load balancing.
+
+まだ未熟な「bison-plus MM構成」についての考えです：
+
+案１：
+DB: Mysql クラスター
+Templates:FastDFSを利用。(他は、Cassandra、MongDBもOK。hadoop？）
+
+Enroll(Insert/Delteion）Node：
+　　動的インスタントの追加・削減できるように。（DMは不要、或いはこちらに合弁）。
+　　FastDFSと連携してSegment同期をこちらで担当。
+　　このNodeでSegmentFile作成、FastDFSへ格納。MUはこのNodeの指示より、FastDFSサーバーからDownloadする。
+
+ExtractionNode：特抽実行計画、EUの死活管理、Jobの死活もこちらで担当。
+
+IdentifyNode：MUのSegmentLoadbalance、照合実行計画、MUの死活管理、Jobの死活管理もこちら。
+
+分割されますが、多くのソースはPOC版のソース、あるいは5.4のAIMソースからCopeできる（AcceptからResponse返すまでの流れは同じですから）。
+
+各Nodeでhazelcastような製品を利用することで、真の実行計画並列実行が実現できる。
+大牛说的[実行計画並列実行],严格说来不能叫做并列执行，而且他之前上传到SVN的代码，已经被他删除掉了。
+
+
+案２：
+
+貴方の案、ほぼAIM5.4の構成で行く、TempalteだけMySQLから分離。こちらはリスクが低い。
+真の実行計画並列実行の実現が難しい（UIDは実行計画並列実行は不要かも、FamilyJobの概念がない、MI一つですから、FusionJobもなし）
+この案も、工夫して、SyncSeriveを動的に増加も実現できるかも）
+
+
+案１のリスクは案２より高い、製造コストも高い。
+案１は万一クラウドへの配布が可能です。(案２もできますね）。
+
+
+案３、Bisonで行く。(石井さんの報告より、インドメンバーはまだこちらを想像している気がします）。
