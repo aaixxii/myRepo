@@ -9,3 +9,9 @@ https://download.microsoft.com/download/3/6/F/36FE7C6C-2CDB-44B1-AB66-079E6E9DD2
 eclipse-ui-theme - https://raw.github.com/guari/eclipse-ui-theme/master/com.github.eclipseuitheme.themes.updatesite
 
 blackTheme - http://eclipse-color-theme.github.com/update
+
+https://zhuanlan.zhihu.com/p/54164612
+
+https://zhuanlan.zhihu.com/p/34989844
+
+https://juejin.im/post/5cff7f93e51d455cd73ba06c
