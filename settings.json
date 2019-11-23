@@ -1,0 +1,62 @@
+{
+    "editor.fontSize": 14,
+    "git.path":"C:\\Program Files\\Git\\bin",
+    "go.useLanguageServer": true,
+    "go.alternateTools": {
+        "go-langserver": "gopls"
+    },
+    "go.languageServerExperimentalFeatures": {
+        "format": true,
+        "autoComplete": true,
+        "rename": true,
+        "goToDefinition": true,
+        "hover": true,
+        "signatureHelp": true,
+        "goToTypeDefinition": true,
+        "goToImplementation": true,
+        "documentSymbols": true,
+        "workspaceSymbols": true,
+        "findReferences": true,
+        "diagnostics": true
+    },
+    "[go]": {
+        "editor.snippetSuggestions": "none",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+    },
+    
+
+    "files.encoding": "utf8",
+    "explorer.confirmDelete": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "files.autoSave": "afterDelay",
+    "window.zoomLevel": 1,   
+    "go.gocodeAutoBuild": true,
+    "go.gopath": "F:\\mygo\\FIRSTGO" , 
+
+    "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+    "java.jdt.ls.vmargs": "-noverify -Xmx1G -XX:+UseG1GC -XX:+UseStringDeduplication -javaagent:\"C:\\Users\\xia\\.vscode\\extensions\\gabrielbb.vscode-lombok-0.9.9/server/lombok.jar\"",
+    "java.errors.incompleteClasspath.severity": "ignore",
+    "workbench.colorTheme": "Atom One Dark",
+    "java.home":"D:\\Java\\jdk1.8.0_221",
+    "java.configuration.maven.userSettings": "D:\\apache-maven-3.5.3\\conf\\settings.xml",
+    "maven.executable.path": "D:\\apache-maven-3.5.3\\bin\\mvn.cmd",
+    "maven.terminal.useJavaHome": true,
+    "maven.terminal.customEnv": [
+        {
+            "environmentVariable": "JAVA_HOME",
+            "value": "D:\\Java\\jdk1.8.0_16"
+        }
+    ],
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "[javascript]": {
+        "editor.defaultFormatter": "HookyQR.beautify"
+    },
+    "java.configuration.checkProjectSettingsExclusions": false
+}
