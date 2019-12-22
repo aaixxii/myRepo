@@ -23,3 +23,5 @@ https://blog.csdn.net/qq_31497557/article/details/83545305
 https://dev.classmethod.jp/etc/vs-code-remote-development-ec2/
 
 https://www.jianshu.com/p/0f2fb935a9a1
+
+http://idea.iblue.me
