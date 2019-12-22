@@ -1,0 +1,25 @@
+https://www.suzu6.net/posts/130-vscode-for-java/
+
+vscode for java 
+  Java extension pack
+  Eclipse Keymap for Visual Studio Code
+  Lombok Annotations Support for VS Code
+
+
+"java.home": "D:\\Java\\jdk1.8.0_221"
+
+
+D:\apache-maven-3.6.0
+
+https://blog.csdn.net/qq_41758289/article/details/92420814
+
+"maven.executable.path": "D:\apache-maven-3.6.0\bin/bin/mvn.cmd",
+
+"java.configuration.maven.userSettings": "D:/javaTools/apache-maven-3.3.9/conf/settings.xml",
+
+
+https://blog.csdn.net/qq_31497557/article/details/83545305
+
+https://dev.classmethod.jp/etc/vs-code-remote-development-ec2/
+
+https://www.jianshu.com/p/0f2fb935a9a1
