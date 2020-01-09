@@ -1,0 +1,44 @@
+
+仕様：
+
+1. PERSON_BIOMETRICSテーブルをDM DB(暫定Cassandra)に移管
+2. DMはクラスタで構成。
+3. MUへのSegmentアサインは相変わらずMM担当
+4. MUへのSegment同期はMM担当（DM？）
+
+
+検討：
+
+1. DM持つべきテーブル(Cassandraに格納、各DMで共有）
+　 PERSON_BIOMETRICS
+   DM List（dm_id, url, segments storage path)
+　 SEGMENT_CHANGE_LOG(MM,DM両方持つ）
+　 SEGMENTS(dm_idを追加)
+　　MM もSEGMENTSテーブルを持つ。
+   ※：SEGMENTSテーブルがないと、SLBと実行計画の実装はできない
+
+
+2. IFの変更
+　 ● MM、DM間のIFの追加
+     SyncJobRequestが来たら、MMはこれをDMへ要求。DMはResponseとして、以下の情報を返す：
+　　　　dmid, segmentId、newSegmentFlag、change_type,last_sement_version,container_id, biometorics_id
+        ※：BIO_ID_START,BIO_ID_ENDはいらないか　
+　　MMは上記情報よりSegmentsテーブル、 SEGMENT_CHANGE_LOGテーブル情報を作成。
+
+　● PBSegmentInfoにdm_idを追加。
+
+3. MMのDM選択はLVSような機能を利用(暫定Nigix）
+
+4. DMがダウンになったら、どうする？
+　　Templateデータは、Cassandraより可用性保障しています。
+　　DMがダウンになると、そのDMが持っているSegmentFileはつかえなくなり、
+　　別のDMより、Cassandraから取得して、SegmentFileを再作成必要がある。
+　　これがMMで管理？
+　　Zookeeper、keepalivedようなツールを利用しても、SegmentFileの移動は難しいでしょう？
+
+
+
+
+
+　　　
+　　
