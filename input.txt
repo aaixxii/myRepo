@@ -1,0 +1,5 @@
+https://qiita.com/yoshidan/items/a6515d37784c6779efc5
+
+Ribbon as a Load Balancer | Spring Boot Demo
+
+https://www.yiibai.com/spring-boot/spring_boot_hystrix.html
