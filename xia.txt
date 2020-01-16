@@ -1,0 +1,1 @@
+https://github.com/vishrantgupta/spring-boot-cassandra-example
