@@ -1,0 +1,16 @@
+﻿https://blog.csdn.net/u010670689/article/details/97177394
+
+
+https://lonbaw.github.io/2019/06/14/Hadoop集群配置详解/
+
+https://github.com/yaojingguo/geekbang-zk-course
+
+https://github.com/ShileiGuo/geekbang-zk-course
+
+https://blog.csdn.net/liyiming2017/article/details/85063868
+http://www.disheng.tech/blog/zookeeper-集群高可用部署详解/
+
+etcd和Consul
+
+
+Netty Zookeeper Redis 高并发实战
