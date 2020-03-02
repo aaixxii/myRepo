@@ -1,0 +1,126 @@
+https://juejin.im/post/5e44eb986fb9a07caa26fdab
+
+yum install gcc -y
+
+yum intall pcre pcre-devel -y
+
+yum install zlib zlib-devel -y
+
+yum install openssl openssl-devel -y 
+yum install wget -y 
+
+download nginx
+ wget http://nginx.org/download/nginx 
+
+tar -zxvf nginx-1.15.2 tar.gz
+cd nginx-1.15.2
+./confgure
+make & make install
+/usr/local/nginx
+
+./nginx -t
+
+ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
+设置随机启动
+vi/etc/init/d/nginx配置文件
+vi nginx paster
+chmod 755 nginx
+
+反向代理
+location ~\.jsp$
+ proxy_pass http://192.168.22.171:8080;
+
+负载均衡
+upsteam:
+在HttP之内，SERVER之外的
+
+upstream myapp {
+ server 192.168.1.171:8080 weight max_fails =2 fail_timout=30s;
+ server 192.168.1.172:8080 weight max_fails =2 fail_timout=30s;
+
+}
+
+location / {
+
+ proxy_pass http://myapp;
+}
+
+https://www.youtube.com/watch?v=dOg_5M51hyQ
+https://www.youtube.com/watch?v=Sl9hbfSCN6s&list=PLmOn9nNkQxJFqjd8stdqdXgTnDDpr0baO
+
+高可用准备工作
+两台NGINX机器，安装NGINX， keeperalieve'yum install keeperailived etc/keeperalived
+配置高可用性 修改keepalive .conf
+
+#! /bin/bash
+A=`ps -C nginx -no-header |WC -l`
+if [$A -eq 0]; then
+   /usr/local/nginx/sbin/nginx
+   sleep 2
+   if [`ps -C nginx -no-header |WC -l` -eq 0];then
+      killall keepalived
+    fi
+fi
+
+vrrp\script chk_http_port {
+   script "/usr/local/src/nginx_check_.sh
+   inteaval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+   state BACKUP
+   interface ens33
+   virtal_route_id 51
+    priority 100
+    advert_int 1
+authentication {
+ auth_type PASS
+ auth_pass 1111
+}
+ virtula_ipaddress {
+ 192.168.17.50
+}
+}
+
+
+}
+goclaba efs
+
+
+https://github.com/Lu-dashuai/nginx-/blob/master/笔记资料/nginx课件v1.0.pdf
+
+https://maizitoday.github.io/post/zookeeper入门/
+
+https://maizitoday.github.io/post/zookeeper-监听服务器动态上下线/#公共端代码
+
+https://github.com/ZhongFuCheng3y/3y/blob/master/src/resource.md
+
+LOCK TABLES sample_table WRITE;
+UNLOCK TABLES;
+
+create trigger one_row
+ before insert 
+ on talbe master for each row
+select count(id) into xx form master
+if 
+
+CREATE TABLE tbl (
+  number INT CHECK (0 < number AND number <= 5),
+  word VARCHAR(20) CHECK (word REGEXP '^[a-z]+$')
+);
+
+
+
+ELECT NOW();
+3
+//create_timeに現在時刻を代入
+4
+UPDATE test set create_time = NOW();
+
+
+CURRENT_TIMESTAMP()
+・LOCALTIME()
+・LOCALTIMESTAMP()
+
+
