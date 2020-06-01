@@ -1,0 +1,19 @@
+また、ReferenceId, Urlに関する質問です。実装上は問題ないですが、性能のため確認させていただきます。
+
+特抽の場合、ReferenceId, Urlは両方必須です。
+Syncと照合の場合、ReferenceIdか, Urlかのどちらになります。
+定義上、両方をrequiredにするか、両方をoptionにするか、いずれも問題ありません。
+両方が入る場合、どちらに優先にするかを決めたい。ここは性能を違ってくるかと思います。
+
+例えば、Syncの場合、先にReferenceIdを優先に、NSMへ問い合わせします。
+NSMからTemplateDataを正常にもらえるなら、特抽はしません。
+
+
+message PBMuExtractJobResultItem {
+    int64 jobId = 1;
+    PBServiceStateReason jobState = 2; ★：ここはもしかしたら、PBServiceState？
+    string result = 3;
+    bytes diagnostics = 4;
+}
+
+
