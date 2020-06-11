@@ -1,0 +1,3 @@
+batch used time(104675 )
+batch used time(103208)
+batch used time(107765)
