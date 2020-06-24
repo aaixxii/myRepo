@@ -1,0 +1,22 @@
+C:\Users\xia\Desktop\dmclient\lib>java -jar dmclient.jar dm
+2020-06-24 09:38:27,178 [main] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Heatbeat util is run.
+2020-06-24 09:38:28,192 [main] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:38:28,195 [main] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
+2020-06-24 09:38:28,195 [main] INFO  [com.nec.aim.uid.client.main.UidClientMain] - Active DM service count is 1
+2020-06-24 09:38:28,207 [main] INFO  [com.nec.aim.uid.client.main.UidClientMain] - uid dm client is started!
+2020-06-24 09:38:28,208 [pool-2-thread-1] INFO  [com.nec.aim.uid.client.monitor.DirectoryMonitor] - begin nomitor directory:/C:/Users/xia/Desktop/dmclient/monitor
+2020-06-24 09:38:28,267 [Thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Send dm request to DM cluster...
+2020-06-24 09:38:28,378 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:38:28,378 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
+2020-06-24 09:38:28,385 [Thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Post PBDmSyncRequest(cmd= segment_sync_command_new segmentId=1000) to http://127.0.0.1:8080/dm//dmSyncSegment used time=114, and status=200 job success is false
+2020-06-24 09:38:28,385 [Thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Get response from dm,result =false
+2020-06-24 09:38:38,360 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:38:38,360 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
+2020-06-24 09:38:48,344 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:38:48,344 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
+2020-06-24 09:38:58,375 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:38:58,375 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
+2020-06-24 09:39:08,351 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:39:08,352 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
+2020-06-24 09:39:18,363 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - DmSerice(http://127.0.0.1:8080/dm/heartbeat) is active.
+2020-06-24 09:39:18,363 [pool-3-thread-1] INFO  [com.nec.aim.uid.client.post.DmRequestPoster] - Active dm service count is 1
