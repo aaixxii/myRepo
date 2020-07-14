@@ -1,0 +1,30 @@
+java -jar nodostorage.jar
+java -jar dmservice.jar 1234 app.config.location=file:./application.properties
+
+standalone.bat -c standalone-full.xml
+
+call add_biometrics('1',1,1,CAST('aimMysqltest' AS BINARY),@seg);
+
+call delete_biometrics('1',1,'1,2',@count);
+
+CAST('aimMysqltest' AS BINARY)
+cast(now() as date)
+
+UNIX_TIMESTAMP(NOW())
+
+call testTab('1,2,400,5,500,600', @test);
+
+lower_case_table_names=2
+
+net stop MySQL57;
+net start MySQL57;
+
+for linux
+
+eidt /etc/my.cnf
+
+lower_case_table_names = 1 //大小写不敏感
+
+systemctl restart mysqld
+
+
