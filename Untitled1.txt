@@ -1,0 +1,6 @@
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-jms-client-bom</artifactId>
+            <version>${version.wildfly}</version>
+            <type>pom</type>
+        </dependency>
