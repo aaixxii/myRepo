@@ -1,4 +1,0 @@
-
-A cycle was detected in the build path of project 'mm-mq'
-
-A cycle was detected in the build path of project 'mm-ejb'
