@@ -1,0 +1,10 @@
+
+1.ServerSocket server = new ServerSocket(port);   
+
+
+
+2.
+
+ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
+serverSocketChannel .configureBlocking(false);      
+serverSocketChannel .socket().bind(new InetSocketAddress(port));   
