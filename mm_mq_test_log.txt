@@ -1,0 +1,164 @@
+特抽:
+client send request:
+2020-08-22 11:59:16.087  INFO 8444 --- [nio-8088-exec-1] c.n.a.uid.amqclient.sender.ExtReqSender  : ExtReqSender success send message using extReqExchange to extReqKey
+
+MM extract log:
+2020-08-22 11:59:16,392 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:130 to mu:1
+2020-08-22 11:59:16,395 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:130 to queue:feDispatchQueue
+2020-08-22 11:59:16,470 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(130) to feDispatchQueue
+2020-08-22 11:59:16,472 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 130
+2020-08-22 11:59:16,475 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=130 ...
+2020-08-22 11:59:16,505 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 302.
+2020-08-22 11:59:16,512 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-08-22 11:59:16,741 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-08-22 11:59:16,741 INFO  [FEPlanDispatcher] () FeLotJob(130)- feJobs(130) is success to dispatched to 1
+2020-08-22 11:59:16,745 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=130
+2020-08-22 11:59:16,811 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 130, MU id: 1.
+2020-08-22 11:59:16,813 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 130
+2020-08-22 11:59:16,815 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 130
+2020-08-22 11:59:16,829 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) In ExtractJobCompleteBean, Extract result:
+<?xml version="1.0" encoding="UTF-8"?>
+<Response timeStamp="1598065156790" version="3.0" requestId="REQ_00000000000000000000000000000210">
+  <Return value="1"/>
+  <Diagnostics>
+    <Diagnostic attempt="1" subtype="finger" type="finger"/>
+    <Diagnostic attempt="2" subtype="face" type="face"/>
+    <Diagnostic attempt="3" subtype="iris" type="iris"/>
+    <Diagnostic attempt="4" subtype="voice" type="voice"/>
+  </Diagnostics>
+</Response>
+
+2020-08-22 11:59:16,833 INFO  [stdout] (SERVLET|EXTRACTJOBCOMPLETE) Got XML Response. requestId:{}REQ_00000000000000000000000000000210
+2020-08-22 11:59:16,836 INFO  [AmqServiceManager] (SERVLET|EXTRACTJOBCOMPLETE) Call Amq Xml Response Accept!
+2020-08-22 11:59:16,855 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 130 and decrease ExtractLoad with MU id: 1.
+
+client get extract xml response:
+My Recevied ext response message
+<?xml version="1.0" encoding="UTF-8"?>
+<Response timeStamp="1598065156790" version="3.0" requestId="REQ_00000000000000000000000000000210">
+  <Return value="1"/>
+  <Diagnostics>
+    <Diagnostic attempt="1" subtype="finger" type="finger"/>
+    <Diagnostic attempt="2" subtype="face" type="face"/>
+    <Diagnostic attempt="3" subtype="iris" type="iris"/>
+    <Diagnostic attempt="4" subtype="voice" type="voice"/>
+  </Diagnostics>
+</Response>
+
+登録:
+client send request:
+2020-08-22 13:16:49.583  INFO 13888 --- [nio-8088-exec-1] c.n.a.uid.amqclient.sender.InsReqSender  : InsReqSender success send message using insReqExchange to insReqKey
+
+MM Insert log:
+2020-08-22 13:16:49,603 INFO  [AimSyncService] () syncData insert by url begin..
+2020-08-22 13:16:49,619 INFO  [HazelcastService] () extLockMap size= 1
+2020-08-22 13:16:53,542 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-08-22 13:16:53,558 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:3 to mu:1
+2020-08-22 13:16:53,558 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:3 to queue:feDispatchQueue
+2020-08-22 13:16:53,600 INFO  [IdentifyPlanManager] () Got empty job info from DB! IndentiyPlanner will be skip...
+2020-08-22 13:16:53,661 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(3) to feDispatchQueue
+2020-08-22 13:16:53,662 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 3
+2020-08-22 13:16:53,662 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=3 ...
+2020-08-22 13:16:53,669 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-08-22 13:16:53,688 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-08-22 13:16:53,784 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-08-22 13:16:53,784 INFO  [FEPlanDispatcher] () FeLotJob(3)- feJobs(3) is success to dispatched to 1
+2020-08-22 13:16:53,785 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=3
+2020-08-22 13:16:53,841 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 3, MU id: 1.
+2020-08-22 13:16:53,842 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 3
+2020-08-22 13:16:53,843 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 3
+2020-08-22 13:16:53,855 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:3
+2020-08-22 13:16:53,858 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-08-22 13:16:53,859 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-08-22 13:16:53,860 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:3 is completed. notified to AimSyncService.
+2020-08-22 13:16:53,862 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-08-22 13:16:53,862 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 3 and decrease ExtractLoad with MU id: 1.
+2020-08-22 13:16:53,866 INFO  [AimSyncService] () Get insert by url jobId(3) result success
+2020-08-22 13:16:53,866 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4247****
+2020-08-22 13:16:53,913 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000000277, eenrollmentId=REF_00000000000000000000000000000277
+2020-08-22 13:16:53,946 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=2) to http://127.0.0.1:8083/dm/dmSyncSegment used time=32 and status=200
+2020-08-22 13:16:53,946 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=2) to http://127.0.0.1:8083/dm/dmSyncSegment used time=32, and status=200 job success is true
+2020-08-22 13:16:53,948 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000000277, eenrollmentId=REF_00000000000000000000000000000277
+2020-08-22 13:16:53,948 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-08-22 13:16:53,950 WARN  [Registration] () Nothing to push any segment diffs to MU..
+2020-08-22 13:16:53,950 INFO  [stdout] () Got UidAimAmqResponse. requestId:{}REQ_00000000000000000000000000000227
+2020-08-22 13:16:53,950 INFO  [AmqServiceManager] () Call Amq UidAimAmqResponse Accept!
+
+Client: receive insert result:
+<?xml version="1.0" encoding="UTF-8"?>
+My Recevied insert response message
+<Response timeStamp="1598069813833" version="3.0" requestId="REQ_00000000000000000000000000000227">
+  <Return value="1"/>
+  <Diagnostics>
+    <Diagnostic attempt="1" subtype="finger" type="finger"/>
+    <Diagnostic attempt="2" subtype="face" type="face"/>
+    <Diagnostic attempt="3" subtype="iris" type="iris"/>
+    <Diagnostic attempt="4" subtype="voice" type="voice"/>
+  </Diagnostics>
+</Response>
+
+
+
+照合:
+Client send reqeust:
+2020-08-22 13:28:00.332  INFO 1916 --- [nio-8088-exec-2] c.n.a.uid.amqclient.sender.InqReqSender  : InqReqSender success send message using inqReqExchange to inqReqKey
+
+MM 照合 log:
+2020-08-22 13:28:01,937 INFO  [Inquiry] () Created new top-level job: 1 successfully
+2020-08-22 13:28:02,077 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-08-22 13:28:02,156 INFO  [IdentifyPlanManager] () Start updating memory MU_SEGMENT_MAP (functionId:1,ContainerId:1) from DB.
+2020-08-22 13:28:02,187 INFO  [IdentifyPlanManager] () Success to update memory MU_SEGMENT_MAP from DB.
+2020-08-22 13:28:02,218 INFO  [MuExcutionPlanCreator] () MuExcutionPlanCreator prepare to creating mu excutiong plans...
+2020-08-22 13:28:02,218 INFO  [MuExcutionPlanCreator] () prepare assign segments to mus...
+2020-08-22 13:28:02,218 INFO  [MuExcutionPlanCreator] () success to assigned segments(SegmentCount = 1) to mus(muCount = 1).
+2020-08-22 13:28:02,218 INFO  [MuExcutionPlanCreator] () createMuPlans success finished
+2020-08-22 13:28:02,234 INFO  [IdentifyPlanManager] () IndendifyPlanner has succeeded to create planId:1 for jobId:1 funtionId:1 containerId:1
+2020-08-22 13:28:02,249 INFO  [IdentifyPlanCreatedNotifer] () Send JMS to queue:IdentifyDispatchQueue
+2020-08-22 13:28:02,249 INFO  [IdentifyPlanManager] () IndendifyPlanner success create jobs(1) plans and success sent it to IdentifyDispatchQueue by JMS
+2020-08-22 13:28:02,343 INFO  [InquiryDispatcher] () Ready to fetch the next MR, Executed 1 times.
+2020-08-22 13:28:02,531 INFO  [DistributorNotifier] () Notify MR with specified URL: http://127.0.0.1:8085/mapreducer/MapInquiryJob successfully..
+2020-08-22 13:28:02,531 INFO  [InquiryDispatcher] () Notify MR(1) with URL(http://127.0.0.1:8085/mapreducer/MapInquiryJob) mrPlanId(1) successfully.
+2020-08-22 13:28:02,546 INFO  [InquiryJobDao] () Success update containerJob:1
+2020-08-22 13:28:02,593 INFO  [InquiryJobCompleteServlet] () Received inquiryJobComplete request from 127.0.0.1
+2020-08-22 13:28:02,609 INFO  [InquiryJobCompleteBean] () InquiryJobCompleteBean prepare to update job result to db..
+2020-08-22 13:28:02,624 INFO  [InquiryJobCompleteBean] () Ready to complete container job when state is success. MrId:1, JobId:1, ContainerJobId:1, PlanId:1, MessageSequence:0
+2020-08-22 13:28:02,671 INFO  [InquiryJobCompleteBean] () Prepare send identify job result to amq, jobid:1
+2020-08-22 13:28:02,671 INFO  [stdout] () 4Got UidAimAmqResponse. requestId:{}REQ_00000000000000000000000000000228
+2020-08-22 13:28:02,671 INFO  [AmqServiceManager] () Call Amq UidAimAmqResponse Accept!
+
+Client receive identity result:
+My Recevied inq respose message
+<?xml version="1.0" encoding="UTF-8"?>
+<Response timeStamp="1598070482593" version="3.0" requestId="REQ_00000000000000000000000000000228">
+  <Return value="1"/>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId0"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId1"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId2"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId3"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId4"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId5"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId6"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId7"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId8"/>
+  </CandidateList>
+  <CandidateList more="true" count="10">
+    <Candidate faceScore="99" RightIrisScore="99" FingerBothThumbsScore="99" FingerRightSlapScore="99" FingerLeftSlapScore="99" scaledScore="99" referenceId="referId9"/>
+  </CandidateList>
+</Response>
