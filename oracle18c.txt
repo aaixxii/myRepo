@@ -1,5 +1,0 @@
-CREATE PLUGGABLE DATABASE PDB1
-    2  ADMIN USER PDBADMIN IDENTIFIED BY "oracle"
-    3  FILE_NAME_CONVERT=
-    4  ('/u01/app/oracle/oradata/orcl/pdbseed',
-    5  '/u01/app/oracle/oradata/orcl/pdb1');
