@@ -1,0 +1,41 @@
+﻿ロックを行う
+SELECT COUNT(BIOMETRICS_ID) INTO l_count FROM SEGMENT_VACANCIES for UPDATE;
+
+SELECT
+      COUNT(BIOMETRICS_ID) INTO l_count
+FROM SEGMENT_VACANCIES;
+--> COUNT(VACANCIES_ID)に変更
+Index付きのカラムでSelectするように。
+
+60-74 は削除
+      IF l_count < 1 THEN
+      INSERT INTO SEGMENTS (SEGMENT_ID, 
+          BIO_ID_START,
+          BIO_ID_END,
+          BINARY_LENGTH,
+          RECORD_COUNT,
+          VERSION,
+          CONTAINER_ID,
+          REVISION)
+          VALUES (r_seg_id, r_biometric_id,r_biometric_id + tmp_max_seg_record_count, tmp_one_templte_size + 1024, 1, -1, p_container_id, -1);  
+         SET p_new_seg_created = TRUE;
+         SET p_seg_id = r_seg_id;
+         SET p_seg_version = -1;
+         SET p_biometric_id = r_biometric_id;
+      ELSE
+
+133行目に SET last_bio_id = last_bio_id + 1; を持ってきて、INSERTする
+
+138行目のSelectは削除して、last_bio_idをそのまま使う
+SELECT
+      MAX(BIOMETRICS_ID) INTO l_biometrics_id
+    FROM PERSON_BIOMETRICS;
+
+165行目 IF-ELSEを削除
+IF seg_bio_id_end < l_biometrics_id THEN
+  SET seg_bio_id_end = l_biometrics_id;
+END IF;
+
+170行目 IF seg_record_count + 1 < tmp_max_seg_record_count THENは <= とする
+
+220行目 SET last_bio_id = last_bio_id + 1;は削除
