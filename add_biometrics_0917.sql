@@ -1,6 +1,4 @@
-delimiter //
-DROP PROCEDURE IF EXISTS `add_biometrics` //
-CREATE  PROCEDURE `add_biometrics`(IN p_external_id varchar(64),
+CREATE DEFINER=`aimuser`@`%` PROCEDURE `add_biometrics`(IN p_external_id varchar(64),
 IN p_container_id int,
 IN p_biometric_data mediumblob,
 IN p_no int,
@@ -54,20 +52,21 @@ lab_begin:
       INSERT INTO PERSON_BIOMETRICS (BIOMETRICS_ID,
         CONTAINER_ID,
         EXTERNAL_ID,
-        REGISTED_TS)        
-	VALUES (r_biometric_id, p_container_id, p_external_id, ROUND(UNIX_TIMESTAMP(CURTIME(4)) * 1000)); 
-	   update SEGMENTS           
+        REGISTED_TS)
+        VALUES (r_biometric_id, p_container_id, p_external_id, UNIX_TIMESTAMP(NOW()));  
+     -- SELECT COUNT(*) into l_count FROM  SEGMENTS where SEGMENT_ID = r_seg_id;
+	   update SEGMENTS
+           SET 
             BINARY_LENGTH = BINARY_LENGTH + tmp_one_templte_size,
             RECORD_COUNT = RECORD_COUNT + 1,
-            VERSION = VERSION + 1,           
+            VERSION = VERSION + 1,            
             REVISION = REVISION + 1
             WHERE SEGMENT_ID=r_seg_id;
 	   SELECT VERSION INTO r_seg_version FROM SEGMENTS WHERE SEGMENT_ID=r_seg_id;
-	   SET p_new_seg_created = FALSE;
+           SET p_new_seg_created = FALSE;
 	   SET p_seg_id = r_seg_id;
 	   SET p_seg_version = r_seg_version;
-	   SET p_biometric_id = r_biometric_id;	
-     END IF;       
+	   SET p_biometric_id = r_biometric_id;	          
      INSERT INTO SEGMENT_CHANGE_LOG (SEGMENT_ID,
        SEGMENT_VERSION,
        CHANGE_TYPE,
@@ -87,7 +86,7 @@ lab_begin:
       END IF;  
 	 LEAVE lab_begin;
     END IF; 
-    
+    -- body
     SELECT
       COUNT(c.CONTAINER_ID) INTO l_count
     FROM CONTAINERS c
@@ -116,9 +115,11 @@ lab_begin:
     INSERT INTO PERSON_BIOMETRICS (BIOMETRICS_ID,CONTAINER_ID,
     EXTERNAL_ID,
     REGISTED_TS)
-      VALUES (last_bio_id,p_container_id, p_external_id, UNIX_TIMESTAMP(NOW()));  
-	SET l_biometrics_id = last_bio_id; 
-    SET r_biometric_id = last_bio_id;      
+      VALUES (last_bio_id,p_container_id, p_external_id, UNIX_TIMESTAMP(NOW()));
+    SELECT
+      MAX(BIOMETRICS_ID) INTO l_biometrics_id
+    FROM PERSON_BIOMETRICS;
+    SET r_biometric_id = l_biometrics_id;
     SELECT
       CONTAINER_ID,
       MAX_SEGMENT_SIZE,
@@ -134,13 +135,18 @@ lab_begin:
       seg.REVISION,
       seg.BIO_ID_END INTO seg_semgnet_id, seg_binary_length,
       seg_record_count,
-      seg_version, seg_revision, seg_bio_id_end
+    seg_version, seg_revision, seg_bio_id_end
     FROM SEGMENTS seg
     WHERE CONTAINER_ID = p_container_id
     AND SEGMENT_ID = (SELECT
         MAX(SEGMENT_ID)
       FROM SEGMENTS s
-      WHERE s.CONTAINER_ID = p_container_id);    
+      WHERE s.CONTAINER_ID = p_container_id);
+
+    IF seg_bio_id_end < l_biometrics_id THEN
+      SET seg_bio_id_end = l_biometrics_id;
+    END IF;
+    
     
       IF seg_record_count + 1 <= tmp_max_seg_record_count THEN
       UPDATE SEGMENTS
@@ -182,7 +188,8 @@ lab_begin:
       UPDATE_TS,
       P_NO,
       BIOMETRICS_ID)
-        VALUES (r_seg_id, -1, 1, p_external_id, p_biometric_data,CAST(NOW() AS date), p_no, r_biometric_id); 
+        VALUES (r_seg_id, -1, 1, p_external_id, p_biometric_data,CAST(NOW() AS date), p_no, r_biometric_id);       
+        
       SET r_seg_version = -1;
       SET l_seg_created = TRUE;	
     END IF;
@@ -203,5 +210,3 @@ lab_begin:
       SET p_new_seg_created = NULL;
     END IF;
   END
-//
-delimiter ;
