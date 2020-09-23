@@ -440,6 +440,22 @@ Insertかかる時間＝2020-09-23 16:39:16,046-2020-2020-09-23 16:39:10,935＝5
 変列10件のトータルかかる時間＝2020-09-23 17:03:59,857ー2020-09-23 17:03:48,000＝11.857秒
 
 
+MuへDipatch完了、Hazcast経由でMUの結果を取得できるまでのかかる時間、Min=75、Max=4990、ここの調査が必要と思います：
+"Sync_log.txt"(36,56):2020-09-23 16:38:41,361 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4903****
+"Sync_log.txt"(91,56):2020-09-23 16:39:15,954 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4990****
+"Sync_log.txt"(132,56):2020-09-23 17:03:48,851 INFO  [AimSyncService] () *****MM get insert by url job results used time = 734****
+"Sync_log.txt"(170,56):2020-09-23 17:03:53,639 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4321****
+"Sync_log.txt"(202,56):2020-09-23 17:03:53,964 INFO  [AimSyncService] () *****MM get insert by url job results used time = 75****
+"Sync_log.txt"(234,56):2020-09-23 17:03:54,380 INFO  [AimSyncService] () *****MM get insert by url job results used time = 125****
+"Sync_log.txt"(266,56):2020-09-23 17:03:54,692 INFO  [AimSyncService] () *****MM get insert by url job results used time = 93****
+"Sync_log.txt"(298,56):2020-09-23 17:03:55,047 INFO  [AimSyncService] () *****MM get insert by url job results used time = 96****
+"Sync_log.txt"(334,56):2020-09-23 17:03:58,588 INFO  [AimSyncService] () *****MM get insert by url job results used time = 3300****
+"Sync_log.txt"(367,56):2020-09-23 17:03:59,061 INFO  [AimSyncService] () *****MM get insert by url job results used time = 79****
+"Sync_log.txt"(398,56):2020-09-23 17:03:59,514 INFO  [AimSyncService] () *****MM get insert by url job results used time = 203****
+"Sync_log.txt"(431,56):2020-09-23 17:03:59,811 INFO  [AimSyncService] () *****MM get insert by url job results used time = 63****
+12 occurrences have been found in 1 files.
+
+
 
 
 
