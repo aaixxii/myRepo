@@ -1,0 +1,449 @@
+
+NewSegment:
+
+2020-09-23 16:38:36,333 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 16:38:36,364 INFO  [PartitionStateManager] () [localhost]:5701 [dev] [4.0.1] Initializing cluster partition table arrangement...
+2020-09-23 16:38:36,458 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 16:38:36,458 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=1
+2020-09-23 16:38:37,188 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:38:38,194 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:38:39,198 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:38:40,201 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:38:40,810 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-09-23 16:38:40,826 WARN  [IdentifyPlanManager] () No MR is in working! skip creating plan.
+2020-09-23 16:38:40,903 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:1 to mu:1
+2020-09-23 16:38:40,906 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:1 to queue:feDispatchQueue
+2020-09-23 16:38:40,927 INFO  [SocketHeatBeatSender] () Active dm sevice count=1
+2020-09-23 16:38:40,927 INFO  [SocketHeatBeatSender] () http://127.0.0.1:8083/dm is active!
+2020-09-23 16:38:40,974 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(1) to feDispatchQueue
+2020-09-23 16:38:40,977 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 1
+2020-09-23 16:38:40,979 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=1 ...
+2020-09-23 16:38:41,006 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 16:38:41,014 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 16:38:41,220 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 16:38:41,220 INFO  [FEPlanDispatcher] () FeLotJob(1)- feJobs(1) is success to dispatched to 1
+2020-09-23 16:38:41,220 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=1
+2020-09-23 16:38:41,236 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:38:41,314 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 1, MU id: 1.
+2020-09-23 16:38:41,314 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 1
+2020-09-23 16:38:41,314 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 1
+2020-09-23 16:38:41,330 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:1
+2020-09-23 16:38:41,345 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 16:38:41,345 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 16:38:41,361 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:1 is completed. notified to AimSyncService.
+2020-09-23 16:38:41,361 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 16:38:41,361 INFO  [AimSyncService] () Get insert by url jobId(1) result success
+2020-09-23 16:38:41,361 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4903****
+2020-09-23 16:38:41,408 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 1 and decrease ExtractLoad with MU id: 1.
+2020-09-23 16:38:41,439 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003249, eenrollmentId=REF_00000000000000000000000000003249
+2020-09-23 16:38:41,564 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 16:38:42,208 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:38:42,551 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=1096 and status=200
+2020-09-23 16:38:42,567 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_new segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=1096, and status=200 job success is true
+2020-09-23 16:38:42,645 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=78 and status=200
+2020-09-23 16:38:42,645 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=78, and status=200 job success is true
+2020-09-23 16:38:42,645 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003249, eenrollmentId=REF_00000000000000000000000000003249
+2020-09-23 16:38:42,661 INFO  [Registration] () New Segment was created, need to call slb, SLB will wakeUp the DM MU, DM MU will fetch the data..
+2020-09-23 16:38:42,661 INFO  [RUCDao] () Ready to increase RUC.
+
+NewSegmentかかる時間＝2020-09-23 16:38:42,661-2020-09-23 16:38:36,333＝6.328秒
+
+
+Insert:
+
+2020-09-23 16:39:10,935 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 16:39:10,962 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 16:39:10,962 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=2
+2020-09-23 16:39:11,211 WARN  [SegUpdatesManager] () segmentId:1  latestVerson:0  reportVersion:1  queuedVersion:1 Received a no-op segment update... these should be filtered out now!
+2020-09-23 16:39:11,211 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:39:11,304 INFO  [SocketHeatBeatSender] () Active dm sevice count=1
+2020-09-23 16:39:11,304 INFO  [SocketHeatBeatSender] () http://127.0.0.1:8083/dm is active!
+2020-09-23 16:39:12,196 WARN  [SegUpdatesManager] () segmentId:1  latestVerson:0  reportVersion:1  queuedVersion:1 Received a no-op segment update... these should be filtered out now!
+2020-09-23 16:39:12,196 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:39:13,194 WARN  [SegUpdatesManager] () segmentId:1  latestVerson:0  reportVersion:1  queuedVersion:1 Received a no-op segment update... these should be filtered out now!
+2020-09-23 16:39:13,194 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:39:14,197 WARN  [SegUpdatesManager] () segmentId:1  latestVerson:0  reportVersion:1  queuedVersion:1 Received a no-op segment update... these should be filtered out now!
+2020-09-23 16:39:14,197 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:39:15,201 WARN  [SegUpdatesManager] () segmentId:1  latestVerson:0  reportVersion:1  queuedVersion:1 Received a no-op segment update... these should be filtered out now!
+2020-09-23 16:39:15,201 INFO  [SegUpdatesManager] () Nothing to catch up, unit id: 1..
+2020-09-23 16:39:15,810 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-09-23 16:39:15,810 WARN  [IdentifyPlanManager] () No MR is in working! skip creating plan.
+2020-09-23 16:39:15,857 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:2 to mu:1
+2020-09-23 16:39:15,857 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:2 to queue:feDispatchQueue
+2020-09-23 16:39:15,895 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(2) to feDispatchQueue
+2020-09-23 16:39:15,897 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 2
+2020-09-23 16:39:15,898 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=2 ...
+2020-09-23 16:39:15,905 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 16:39:15,913 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 16:39:15,913 INFO  [FEPlanDispatcher] () FeLotJob(2)- feJobs(2) is success to dispatched to 1
+2020-09-23 16:39:15,914 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=2
+2020-09-23 16:39:15,923 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 2, MU id: 1.
+2020-09-23 16:39:15,925 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 2
+2020-09-23 16:39:15,928 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 2
+2020-09-23 16:39:15,934 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 16:39:15,935 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:2
+2020-09-23 16:39:15,939 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 16:39:15,944 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 16:39:15,944 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:2 is completed. notified to AimSyncService.
+2020-09-23 16:39:15,947 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 16:39:15,948 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 2 and decrease ExtractLoad with MU id: 1.
+2020-09-23 16:39:15,953 INFO  [AimSyncService] () Get insert by url jobId(2) result success
+2020-09-23 16:39:15,954 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4990****
+2020-09-23 16:39:15,976 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003251, eenrollmentId=REF_00000000000000000000000000003251
+2020-09-23 16:39:16,004 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=28 and status=200
+2020-09-23 16:39:16,004 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=28, and status=200 job success is true
+2020-09-23 16:39:16,008 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003251, eenrollmentId=REF_00000000000000000000000000003251
+2020-09-23 16:39:16,009 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 16:39:16,046 INFO  [Registration] () Push async data to MU, task number: 1.
+
+Insertかかる時間＝2020-09-23 16:39:16,046-2020-2020-09-23 16:39:10,935＝5.111秒
+
+
+変列10件、連続
+
+
+2020-09-23 17:03:48,000 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:48,036 INFO  [PartitionStateManager] () [localhost]:5701 [dev] [4.0.1] Initializing cluster partition table arrangement...
+2020-09-23 17:03:48,115 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:48,116 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=23
+2020-09-23 17:03:48,507 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-09-23 17:03:48,523 INFO  [SocketHeatBeatSender] () Active dm sevice count=1
+2020-09-23 17:03:48,523 INFO  [SocketHeatBeatSender] () http://127.0.0.1:8083/dm is active!
+2020-09-23 17:03:48,569 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:23 to mu:1
+2020-09-23 17:03:48,569 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:23 to queue:feDispatchQueue
+2020-09-23 17:03:48,569 INFO  [IdentifyPlanManager] () Got empty job info from DB! IndentiyPlanner will be skip...
+2020-09-23 17:03:48,648 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(23) to feDispatchQueue
+2020-09-23 17:03:48,648 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 23
+2020-09-23 17:03:48,648 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=23 ...
+2020-09-23 17:03:48,694 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:48,694 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:48,788 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:48,788 INFO  [FEPlanDispatcher] () FeLotJob(23)- feJobs(23) is success to dispatched to 1
+2020-09-23 17:03:48,804 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=23
+2020-09-23 17:03:48,804 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 23, MU id: 1.
+2020-09-23 17:03:48,804 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 23
+2020-09-23 17:03:48,804 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 23
+2020-09-23 17:03:48,819 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:23
+2020-09-23 17:03:48,851 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:48,851 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:48,851 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:23 is completed. notified to AimSyncService.
+2020-09-23 17:03:48,851 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:48,851 INFO  [AimSyncService] () Get insert by url jobId(23) result success
+2020-09-23 17:03:48,851 INFO  [AimSyncService] () *****MM get insert by url job results used time = 734****
+2020-09-23 17:03:48,875 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 23 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:48,889 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003275, eenrollmentId=REF_00000000000000000000000000003275
+2020-09-23 17:03:49,009 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:49,053 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=145 and status=200
+2020-09-23 17:03:49,056 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=145, and status=200 job success is true
+2020-09-23 17:03:49,061 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003275, eenrollmentId=REF_00000000000000000000000000003275
+2020-09-23 17:03:49,062 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:49,094 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:49,198 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:49,224 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:49,234 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:49,302 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:49,318 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=24
+2020-09-23 17:03:53,529 INFO  [SocketHeatBeatSender] () Active dm sevice count=1
+2020-09-23 17:03:53,529 INFO  [SocketHeatBeatSender] () http://127.0.0.1:8083/dm is active!
+2020-09-23 17:03:53,529 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-09-23 17:03:53,529 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:24 to mu:1
+2020-09-23 17:03:53,545 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:24 to queue:feDispatchQueue
+2020-09-23 17:03:53,592 INFO  [IdentifyPlanManager] () Got empty job info from DB! IndentiyPlanner will be skip...
+2020-09-23 17:03:53,607 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(24) to feDispatchQueue
+2020-09-23 17:03:53,607 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 24
+2020-09-23 17:03:53,607 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=24 ...
+2020-09-23 17:03:53,607 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:53,623 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:53,623 INFO  [FEPlanDispatcher] () FeLotJob(24)- feJobs(24) is success to dispatched to 1
+2020-09-23 17:03:53,623 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=24
+2020-09-23 17:03:53,623 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 24, MU id: 1.
+2020-09-23 17:03:53,623 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 24
+2020-09-23 17:03:53,623 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 24
+2020-09-23 17:03:53,639 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:53,639 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:24
+2020-09-23 17:03:53,639 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:53,639 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:53,639 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:24 is completed. notified to AimSyncService.
+2020-09-23 17:03:53,639 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:53,639 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 24 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:53,639 INFO  [AimSyncService] () Get insert by url jobId(24) result success
+2020-09-23 17:03:53,639 INFO  [AimSyncService] () *****MM get insert by url job results used time = 4321****
+2020-09-23 17:03:53,654 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003276, eenrollmentId=REF_00000000000000000000000000003276
+2020-09-23 17:03:53,685 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31 and status=200
+2020-09-23 17:03:53,685 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31, and status=200 job success is true
+2020-09-23 17:03:53,685 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003276, eenrollmentId=REF_00000000000000000000000000003276
+2020-09-23 17:03:53,685 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:53,685 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:53,779 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:53,856 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:53,871 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:53,889 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:53,889 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=25
+2020-09-23 17:03:53,893 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:25 to mu:1
+2020-09-23 17:03:53,895 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:25 to queue:feDispatchQueue
+2020-09-23 17:03:53,919 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(25) to feDispatchQueue
+2020-09-23 17:03:53,925 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 25
+2020-09-23 17:03:53,925 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=25 ...
+2020-09-23 17:03:53,935 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:53,939 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:53,939 INFO  [FEPlanDispatcher] () FeLotJob(25)- feJobs(25) is success to dispatched to 1
+2020-09-23 17:03:53,940 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=25
+2020-09-23 17:03:53,947 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 25, MU id: 1.
+2020-09-23 17:03:53,949 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 25
+2020-09-23 17:03:53,950 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 25
+2020-09-23 17:03:53,953 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:53,957 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:25
+2020-09-23 17:03:53,958 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:53,960 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:53,960 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:25 is completed. notified to AimSyncService.
+2020-09-23 17:03:53,962 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:53,962 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 25 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:53,964 INFO  [AimSyncService] () Get insert by url jobId(25) result success
+2020-09-23 17:03:53,964 INFO  [AimSyncService] () *****MM get insert by url job results used time = 75****
+2020-09-23 17:03:53,972 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003277, eenrollmentId=REF_00000000000000000000000000003277
+2020-09-23 17:03:53,994 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=22 and status=200
+2020-09-23 17:03:53,994 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=22, and status=200 job success is true
+2020-09-23 17:03:53,998 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003277, eenrollmentId=REF_00000000000000000000000000003277
+2020-09-23 17:03:53,998 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:53,999 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:54,130 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:54,239 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:54,239 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:54,255 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:54,255 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=26
+2020-09-23 17:03:54,302 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:26 to mu:1
+2020-09-23 17:03:54,302 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:26 to queue:feDispatchQueue
+2020-09-23 17:03:54,318 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(26) to feDispatchQueue
+2020-09-23 17:03:54,318 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 26
+2020-09-23 17:03:54,318 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=26 ...
+2020-09-23 17:03:54,333 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:54,333 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:54,333 INFO  [FEPlanDispatcher] () FeLotJob(26)- feJobs(26) is success to dispatched to 1
+2020-09-23 17:03:54,333 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=26
+2020-09-23 17:03:54,349 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 26, MU id: 1.
+2020-09-23 17:03:54,349 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 26
+2020-09-23 17:03:54,364 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:54,364 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 26
+2020-09-23 17:03:54,380 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:26
+2020-09-23 17:03:54,380 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:54,380 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:54,380 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:26 is completed. notified to AimSyncService.
+2020-09-23 17:03:54,380 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:54,380 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 26 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:54,380 INFO  [AimSyncService] () Get insert by url jobId(26) result success
+2020-09-23 17:03:54,380 INFO  [AimSyncService] () *****MM get insert by url job results used time = 125****
+2020-09-23 17:03:54,396 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003278, eenrollmentId=REF_00000000000000000000000000003278
+2020-09-23 17:03:54,427 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31 and status=200
+2020-09-23 17:03:54,427 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31, and status=200 job success is true
+2020-09-23 17:03:54,442 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003278, eenrollmentId=REF_00000000000000000000000000003278
+2020-09-23 17:03:54,442 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:54,442 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:54,536 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:54,583 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:54,599 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:54,599 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:54,599 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=27
+2020-09-23 17:03:54,614 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:27 to mu:1
+2020-09-23 17:03:54,614 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:27 to queue:feDispatchQueue
+2020-09-23 17:03:54,646 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(27) to feDispatchQueue
+2020-09-23 17:03:54,646 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 27
+2020-09-23 17:03:54,646 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=27 ...
+2020-09-23 17:03:54,661 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:54,661 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:54,661 INFO  [FEPlanDispatcher] () FeLotJob(27)- feJobs(27) is success to dispatched to 1
+2020-09-23 17:03:54,661 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=27
+2020-09-23 17:03:54,677 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 27, MU id: 1.
+2020-09-23 17:03:54,677 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 27
+2020-09-23 17:03:54,677 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 27
+2020-09-23 17:03:54,677 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:54,677 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:27
+2020-09-23 17:03:54,677 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:54,677 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:54,677 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:27 is completed. notified to AimSyncService.
+2020-09-23 17:03:54,692 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:54,692 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 27 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:54,692 INFO  [AimSyncService] () Get insert by url jobId(27) result success
+2020-09-23 17:03:54,692 INFO  [AimSyncService] () *****MM get insert by url job results used time = 93****
+2020-09-23 17:03:54,708 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003279, eenrollmentId=REF_00000000000000000000000000003279
+2020-09-23 17:03:54,739 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31 and status=200
+2020-09-23 17:03:54,739 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31, and status=200 job success is true
+2020-09-23 17:03:54,739 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003279, eenrollmentId=REF_00000000000000000000000000003279
+2020-09-23 17:03:54,739 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:54,739 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:54,833 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:54,911 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:54,929 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:54,949 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:54,949 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=28
+2020-09-23 17:03:54,955 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:28 to mu:1
+2020-09-23 17:03:54,957 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:28 to queue:feDispatchQueue
+2020-09-23 17:03:54,987 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(28) to feDispatchQueue
+2020-09-23 17:03:54,989 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 28
+2020-09-23 17:03:54,989 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=28 ...
+2020-09-23 17:03:54,995 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:54,999 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:55,000 INFO  [FEPlanDispatcher] () FeLotJob(28)- feJobs(28) is success to dispatched to 1
+2020-09-23 17:03:55,001 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=28
+2020-09-23 17:03:55,013 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 28, MU id: 1.
+2020-09-23 17:03:55,024 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 28
+2020-09-23 17:03:55,026 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 28
+2020-09-23 17:03:55,030 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:55,034 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:28
+2020-09-23 17:03:55,036 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:55,037 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:55,038 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:28 is completed. notified to AimSyncService.
+2020-09-23 17:03:55,041 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:55,043 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 28 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:55,047 INFO  [AimSyncService] () Get insert by url jobId(28) result success
+2020-09-23 17:03:55,047 INFO  [AimSyncService] () *****MM get insert by url job results used time = 96****
+2020-09-23 17:03:55,056 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003280, eenrollmentId=REF_00000000000000000000000000003280
+2020-09-23 17:03:55,084 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=26 and status=200
+2020-09-23 17:03:55,084 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=26, and status=200 job success is true
+2020-09-23 17:03:55,087 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003280, eenrollmentId=REF_00000000000000000000000000003280
+2020-09-23 17:03:55,087 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:55,088 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:55,210 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:55,257 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:55,273 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:55,273 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:55,288 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:55,288 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=29
+2020-09-23 17:03:58,510 INFO  [IdentifyPlanManager] () IdentiyPlanner prepare to making mu executing plans...
+2020-09-23 17:03:58,525 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:29 to mu:1
+2020-09-23 17:03:58,525 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:29 to queue:feDispatchQueue
+2020-09-23 17:03:58,541 INFO  [SocketHeatBeatSender] () Active dm sevice count=1
+2020-09-23 17:03:58,541 INFO  [SocketHeatBeatSender] () http://127.0.0.1:8083/dm is active!
+2020-09-23 17:03:58,557 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(29) to feDispatchQueue
+2020-09-23 17:03:58,557 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 29
+2020-09-23 17:03:58,557 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=29 ...
+2020-09-23 17:03:58,557 INFO  [IdentifyPlanManager] () Got empty job info from DB! IndentiyPlanner will be skip...
+2020-09-23 17:03:58,572 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:58,572 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:58,572 INFO  [FEPlanDispatcher] () FeLotJob(29)- feJobs(29) is success to dispatched to 1
+2020-09-23 17:03:58,572 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=29
+2020-09-23 17:03:58,588 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 29, MU id: 1.
+2020-09-23 17:03:58,588 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 29
+2020-09-23 17:03:58,588 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 29
+2020-09-23 17:03:58,588 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:58,588 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:29
+2020-09-23 17:03:58,588 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:58,588 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:58,588 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:29 is completed. notified to AimSyncService.
+2020-09-23 17:03:58,588 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:58,588 INFO  [AimSyncService] () Get insert by url jobId(29) result success
+2020-09-23 17:03:58,588 INFO  [AimSyncService] () *****MM get insert by url job results used time = 3300****
+2020-09-23 17:03:58,603 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 29 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:58,635 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003281, eenrollmentId=REF_00000000000000000000000000003281
+2020-09-23 17:03:58,666 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31 and status=200
+2020-09-23 17:03:58,666 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31, and status=200 job success is true
+2020-09-23 17:03:58,682 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003281, eenrollmentId=REF_00000000000000000000000000003281
+2020-09-23 17:03:58,682 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:58,682 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:58,728 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:58,946 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:58,962 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:58,980 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:58,982 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=30
+2020-09-23 17:03:58,984 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:30 to mu:1
+2020-09-23 17:03:58,987 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:30 to queue:feDispatchQueue
+2020-09-23 17:03:59,005 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(30) to feDispatchQueue
+2020-09-23 17:03:59,007 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 30
+2020-09-23 17:03:59,008 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=30 ...
+2020-09-23 17:03:59,014 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:59,014 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:59,014 INFO  [FEPlanDispatcher] () FeLotJob(30)- feJobs(30) is success to dispatched to 1
+2020-09-23 17:03:59,014 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=30
+2020-09-23 17:03:59,029 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:59,045 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 30, MU id: 1.
+2020-09-23 17:03:59,045 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 30
+2020-09-23 17:03:59,045 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 30
+2020-09-23 17:03:59,045 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:30
+2020-09-23 17:03:59,045 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:59,045 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:59,045 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:30 is completed. notified to AimSyncService.
+2020-09-23 17:03:59,045 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:59,061 INFO  [AimSyncService] () Get insert by url jobId(30) result success
+2020-09-23 17:03:59,061 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 30 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:59,061 INFO  [AimSyncService] () *****MM get insert by url job results used time = 79****
+2020-09-23 17:03:59,076 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003282, eenrollmentId=REF_00000000000000000000000000003282
+2020-09-23 17:03:59,107 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31 and status=200
+2020-09-23 17:03:59,107 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31, and status=200 job success is true
+2020-09-23 17:03:59,107 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003282, eenrollmentId=REF_00000000000000000000000000003282
+2020-09-23 17:03:59,107 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:59,107 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:59,217 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:59,295 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:59,295 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:59,311 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:31 to mu:1
+2020-09-23 17:03:59,311 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:59,311 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=31
+2020-09-23 17:03:59,326 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:31 to queue:feDispatchQueue
+2020-09-23 17:03:59,467 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(31) to feDispatchQueue
+2020-09-23 17:03:59,467 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 31
+2020-09-23 17:03:59,467 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=31 ...
+2020-09-23 17:03:59,482 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:59,482 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:59,482 INFO  [FEPlanDispatcher] () FeLotJob(31)- feJobs(31) is success to dispatched to 1
+2020-09-23 17:03:59,482 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=31
+2020-09-23 17:03:59,514 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 31, MU id: 1.
+2020-09-23 17:03:59,514 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 31
+2020-09-23 17:03:59,514 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 31
+2020-09-23 17:03:59,514 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:59,514 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:31
+2020-09-23 17:03:59,514 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:59,514 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:59,514 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:31 is completed. notified to AimSyncService.
+2020-09-23 17:03:59,514 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:59,514 INFO  [AimSyncService] () Get insert by url jobId(31) result success
+2020-09-23 17:03:59,514 INFO  [AimSyncService] () *****MM get insert by url job results used time = 203****
+2020-09-23 17:03:59,514 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 31 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:59,529 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003283, eenrollmentId=REF_00000000000000000000000000003283
+2020-09-23 17:03:59,561 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=32 and status=200
+2020-09-23 17:03:59,561 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=32, and status=200 job success is true
+2020-09-23 17:03:59,561 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003283, eenrollmentId=REF_00000000000000000000000000003283
+2020-09-23 17:03:59,561 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:59,576 INFO  [Registration] () Push async data to MU, task number: 1.
+2020-09-23 17:03:59,717 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:59,732 INFO  [SyncServiceServlet] () Received syncRequest from 127.0.0.1
+2020-09-23 17:03:59,732 INFO  [AimSyncService] () syncData insert by url begin..
+2020-09-23 17:03:59,748 INFO  [HazelcastService] () extLockMap size= 1
+2020-09-23 17:03:59,748 INFO  [AimSyncService] () Waiting to mu extract job result, jobId=32
+2020-09-23 17:03:59,748 INFO  [FEPlannerManager] () FEPlanner success assigned feLotJob:32 to mu:1
+2020-09-23 17:03:59,764 INFO  [FEplanCreatedEventNotifier] () Send lotJobId:32 to queue:feDispatchQueue
+2020-09-23 17:03:59,779 INFO  [FEPlannerManager] () FePlanner success to send feLotJobId(32) to feDispatchQueue
+2020-09-23 17:03:59,779 INFO  [FEplanCreatedEventReceiver] () Received Message from FeDispatchQueue: 32
+2020-09-23 17:03:59,779 INFO  [FEPlanDispatcher] () FEPlanDispatcher prepare to dispathing　feLotJobId=32 ...
+2020-09-23 17:03:59,779 INFO  [ExtractRequestPoster] () Starting to send extract request to: http://127.0.0.1:8084/matchunit/ExtractJob, body size: 301.
+2020-09-23 17:03:59,795 INFO  [ExtractRequestPoster] () Success to send extract request to:http://127.0.0.1:8084/matchunit/ExtractJob
+2020-09-23 17:03:59,795 INFO  [FEPlanDispatcher] () FeLotJob(32)- feJobs(32) is success to dispatched to 1
+2020-09-23 17:03:59,795 INFO  [FEplanCreatedEventReceiver] () FEPlanDispatcher from JMS is successed. feLotJobId=32
+2020-09-23 17:03:59,811 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to complete Lot Extract Jobs: 32, MU id: 1.
+2020-09-23 17:03:59,811 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) mu PBMuExtractJobResultItem jobId= 32
+2020-09-23 17:03:59,811 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) MU 1 finishing extract job 32
+2020-09-23 17:03:59,811 WARN  [FEPlannerManager] () No more feJob to assigning for mus!
+2020-09-23 17:03:59,811 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Save to ExtractResultJobQueue for INSERT_REFURL. jobId:32
+2020-09-23 17:03:59,811 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extractJobResutMap size= 1
+2020-09-23 17:03:59,811 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extLockMap size= 1
+2020-09-23 17:03:59,811 INFO  [HazelcastService] (SERVLET|EXTRACTJOBCOMPLETE) extract job:32 is completed. notified to AimSyncService.
+2020-09-23 17:03:59,811 INFO  [HazelcastService] () extractJobResutMap size= 1
+2020-09-23 17:03:59,811 INFO  [ExtractJobCompleteBean] (SERVLET|EXTRACTJOBCOMPLETE) Ready to delete Lot Extract Jobs: 32 and decrease ExtractLoad with MU id: 1.
+2020-09-23 17:03:59,811 INFO  [AimSyncService] () Get insert by url jobId(32) result success
+2020-09-23 17:03:59,811 INFO  [AimSyncService] () *****MM get insert by url job results used time = 63****
+2020-09-23 17:03:59,826 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table(not yet commit) reqeustId=REF_00000000000000000000000000003284, eenrollmentId=REF_00000000000000000000000000003284
+2020-09-23 17:03:59,857 INFO  [DmJobPoster] () Post PBDmSyncRequest(segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31 and status=200
+2020-09-23 17:03:59,857 INFO  [DmJobPoster] () Post PBDmSyncRequest(cmd= segment_sync_command_insert segmentId=1) to http://127.0.0.1:8083/dm/dmSyncSegment used time=31, and status=200 job success is true
+2020-09-23 17:03:59,857 INFO  [AimSyncService] () success insert into PERSON_BIOMETRICS table reqeustId=REF_00000000000000000000000000003284, eenrollmentId=REF_00000000000000000000000000003284
+2020-09-23 17:03:59,857 INFO  [Registration] () No Segment was created, call SegmentUpdateManager and ready to push the segment diff..
+2020-09-23 17:03:59,857 INFO  [Registration] () Push async data to MU, task number: 1.
+
+
+変列10件のトータルかかる時間＝2020-09-23 17:03:59,857ー2020-09-23 17:03:48,000＝11.857秒
+
+
+
+
+
+
+
+
+
