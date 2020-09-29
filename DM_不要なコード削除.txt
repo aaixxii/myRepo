@@ -1,0 +1,31 @@
+﻿DISK_SIZE, SPACEを削除
+
+CREATE TABLE IF NOT EXISTS STORAGE_BOX (                                                         
+    SB_ID INT NOT NULL,                                                                          
+    URL VARCHAR(500) NOT NULL,                                                                   
+    MAIL_FLAG VARCHAR(10) default '', # normal:'', exception:'signal'                            
+★  DISK_SIZE BIGINT(38) NOT NULL ,                                                              
+★  SPACE BIGINT(38) NOT NULL ,                                                                  
+    STATUS TINYINT NOT NULL ,  #pending:0 working:1 stopped:2 suspending:4 detached:5            
+    UPDATE_TS TIMESTAMP NOT NULL,                                                                
+    PRIMARY KEY (SB_ID),                                                                         
+    UNIQUE KEY URL(URL)                                                                          
+) ENGINE=INNODB                                                                                  
+-- DATA DIRECTORY 'absolute path to directory'     
+
+
+
+seed/insert_init_dm_db.sql
+
+以下の、コードを修正
+★ insert into STORAGE_BOX(SB_ID,URL, DISK_SIZE, SPACE, STATUS, UPDATE_TS) values(1,'http://127.0.0.1:12000', 200000,500000, 0,CURRENT_TIMESTAMP());                                                                               
+
+--> insert into STORAGE_BOX(SB_ID, URL, STATUS, UPDATE_TS) values(1,' http://127.0.0.1:12000', 0, CURRENT_TIMESTAMP());                                                                               
+
+以下の、コードを削除
+★ #for election leader                                                                                                                            
+★ #insert into NODE_MASTER(MASTER_ID,DM_MASTER_ID, ONE_TIME_INTERVAL, LAST_TS) values(0,'dm_master1',100,CURRENT_TIMESTAMP());            
+
+
+夏さん ついでで申し訳ありませんが、DDLのコメントに inspection(3)を加えておいてください
+STATUS TINYINT NOT NULL , #pending:0 working:1 stopped:2 inspection:3 suspending:4 detached:5
