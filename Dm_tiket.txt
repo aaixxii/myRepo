@@ -1,5 +1,0 @@
-﻿1. SyncModeは一切気にしない
-2. DM SEGMENT_INFO のバージョン＝-9 となるのは、全SBへのNewSegmentが失敗した場合のみ
-3. DM SEGMENT_INFO のバージョン＝-9 のセグメントに対して、MMが再度 NewSegmentを要求し、成功した場合は、-9 --> 0 に遷移させる
-4. DM SEGMENT_INFO のバージョン>= 0 のセグメントに対するSync成功時はこれまで通り、＋１で更新する
-補足：SEGMENT_LOADINGのバージョンはこれまで通り、失敗したSBのバージョンはー９でOKです。
