@@ -1,7 +1,26 @@
-﻿systemctl restart mysqld
+﻿
+https://www.baeldung.com/wildfly-ejb-jndi
+
+
+
+
+
+
+systemctl restart mysqld
+
+https://www.baeldung.com/wildfly-ejb-jndi
 
 Caused by: javax.security.sasl.SaslException: Authentication failed: all available authentication mechanisms failed:
    DIGEST-MD5: javax.security.sasl.SaslException: DIGEST-MD5: Server rejected authentication
+
+env.put(Context.PROVIDER_URL, "http-remoting://localhost:8080");
+    env.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
+    env.put(Context.SECURITY_PRINCIPAL, "client");
+    env.put(Context.SECURITY_CREDENTIALS, "q");
+
+    Context ctx = new InitialContext(env);
+    connectionFactory = (ConnectionFactory)ctx.lookup("/jms/RemoteConnectionFactory");
+    connection = connectionFactory.createConnection("client", "q");
 
 
 I fixed the error with below changes.

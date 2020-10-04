@@ -6,6 +6,7 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
@@ -82,6 +83,14 @@ public class ExtractJobCompleteBean {
     private FeJobDoneLogger feJobDoneLogger;
     
     private ExceptionSender exceptionSender;
+    
+    @EJB(name="ejb:/matchmanager/mm-ejb/AimInquiryRemoveService!jp.co.nec.aim.mm.acceptor.service.AimInquiryRemote")    
+    AimInquiryRemote inqRemote;
+    
+    @EJB(name="ejb:/matchmanager/mm-ejb/AimSyncRemoteService!jp.co.nec.aim.mm.acceptor.service.AimSyncRemote") 
+    AimSyncRemote syncRemote;
+    
+   
     
     public ExtractJobCompleteBean() {
     }
@@ -205,32 +214,32 @@ public class ExtractJobCompleteBean {
         log.info("MM get MuExtractJobResultItem. jobId:{} for requestType", jobId, reqType);
         Context jndiContext = null;	
         if (reqType.equals(UidRequestType.Identify.name())) {
-    		AimInquiryRemote inqRemote = null;
-			try {
-				jndiContext = getContext(feJobInfo.getCallbackUrl());
-				inqRemote = (AimInquiryRemote) jndiContext
-						.lookup("/matchmanager/mm-ejb/AimInquiryRemoveService!jp.co.nec.aim.mm.acceptor.service.AimInquiryRemote");
-				inqRemote.getExtResAndDoInquriy(ejrItem);
-			} catch (NamingException e) {
-				AimError aimError = AimError.INTERNAL_ERROR;				
-				String requestId = feJobInfo.getRequestId();							
-				UidAimAmqResponse response = XmlUtil.buildFaildXmlReespose(requestId, aimError.getUidCode());
-				AmqServiceManager.getInstance().addToAmqQueue(response);	
-			} 
+        	inqRemote.getExtResAndDoInquriy(ejrItem);
+//			try {
+//				jndiContext = getContext(feJobInfo.getCallbackUrl());
+//				inqRemote = (AimInquiryRemote) jndiContext
+//						.lookup("ejb:/matchmanager/mm-ejb/AimInquiryRemoveService!jp.co.nec.aim.mm.acceptor.service.AimInquiryRemote");
+//				inqRemote.getExtResAndDoInquriy(ejrItem);
+//			} catch (NamingException e) {
+//				AimError aimError = AimError.INTERNAL_ERROR;				
+//				String requestId = feJobInfo.getRequestId();							
+//				UidAimAmqResponse response = XmlUtil.buildFaildXmlReespose(requestId, aimError.getUidCode());
+//				AmqServiceManager.getInstance().addToAmqQueue(response);	
+//			} 
         } else  if (reqType.equals(UidRequestType.Insert.name())) { 
-        	AimSyncRemote syncRemote = null;
-     			try {  
-     			  jndiContext = getContext(feJobInfo.getCallbackUrl());
-     			  syncRemote = (AimSyncRemote) jndiContext
-     						.lookup("/matchmanager/mm-ejb/AimSyncRemoteService!jp.co.nec.aim.mm.acceptor.service.AimSyncRemote");
-     			 syncRemote.getExtResAndDoSync(ejrItem);
-     			} catch (NamingException e) {	
-     				log.error(e.getMessage(), e);
-     				AimError aimError = AimError.INTERNAL_ERROR;				
-    				String requestId = feJobInfo.getRequestId();							
-    				UidAimAmqResponse response = XmlUtil.buildFaildXmlReespose(requestId, aimError.getUidCode());
-    				AmqServiceManager.getInstance().addToAmqQueue(response);		
-     			} 
+        	 syncRemote.getExtResAndDoSync(ejrItem);
+//     			try {  
+//     			  jndiContext = getContext(feJobInfo.getCallbackUrl());
+//     			  syncRemote = (AimSyncRemote) jndiContext
+//     						.lookup("ejb:/matchmanager/mm-ejb/AimSyncRemoteService!jp.co.nec.aim.mm.acceptor.service.AimSyncRemote");
+//     			 syncRemote.getExtResAndDoSync(ejrItem);
+//     			} catch (NamingException e) {	
+//     				log.error(e.getMessage(), e);
+//     				AimError aimError = AimError.INTERNAL_ERROR;				
+//    				String requestId = feJobInfo.getRequestId();							
+//    				UidAimAmqResponse response = XmlUtil.buildFaildXmlReespose(requestId, aimError.getUidCode());
+//    				AmqServiceManager.getInstance().addToAmqQueue(response);		
+//     			} 
         }        
         else if (reqType.equals(UidRequestType.Quality.name())) {         	
         	String reqFrom = systemInitDao.getRequestFromSetting();
@@ -267,14 +276,18 @@ public class ExtractJobCompleteBean {
     	AmqServiceManager.getInstance().addToAmqXmlQueue(UidRequestType.Quality.name(), extRes);    	
     } 
     
-    private Context getContext(String remoteUrl) throws NamingException {
+    @SuppressWarnings("unused")
+	private Context getContext(String remoteUrl) throws NamingException {
 		Properties jndiProperties = new Properties();
 		jndiProperties.put(Context.INITIAL_CONTEXT_FACTORY, "org.wildfly.naming.client.WildFlyInitialContextFactory");
 		jndiProperties.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
 		jndiProperties.put(Context.PROVIDER_URL, "http-remoting://" + remoteUrl);
 		jndiProperties.put("jboss.naming.client.ejb.context", true);
-		jndiProperties.put("remote.connection.default.username", true);
- 		jndiProperties.put("oremote.connection.default.password", true);
+		//jndiProperties.put("remote.connection.default.username", true);
+ 		//jndiProperties.put("oremote.connection.default.password", true);
+		jndiProperties.put(Context.SECURITY_PRINCIPAL, "client");
+		jndiProperties.put(Context.SECURITY_CREDENTIALS, "q");
+
 		Context jndiContext = new InitialContext(jndiProperties);
 		return jndiContext;
 	}    
