@@ -1,0 +1,793 @@
+@charset "UTF-8";
+/* CSS Document */
+/* reset & set
+-------------------------------------------------- */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
+  border: 0;
+  font-family: inherit;
+  font-size: 100%;
+  font-style: inherit;
+  font-weight: inherit;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+menu,
+nav,
+section,
+summary {
+  display: block;
+}
+
+*,
+*::after,
+*::before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a img:hover,
+a:hover {
+  opacity: 0.8;
+}
+
+li img {
+  display: block;
+}
+
+a img {
+  border-style: none;
+}
+
+img {
+  vertical-align: bottom;
+  width: 100%;
+}
+
+input,
+label,
+button,
+submit,
+textarea {
+  -webkit-box-sizing: border-box;
+  background: none;
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  display: inline-block;
+  font: inherit;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  padding: 0;
+  vertical-align: middle;
+  white-space: normal;
+}
+
+input[type='text'] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type='text']::focus {
+  border: 2px solid #676767;
+}
+
+input[type='text']::focus, select::focus {
+  border-color: #616161;
+}
+
+input[type="submit"],
+input[type="button"] {
+  -moz-appearance: button;
+  -webkit-appearance: button;
+  -webkit-box-sizing: content-box;
+  -webkit-box-sizing: border-box;
+  appearance: button;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
+}
+
+input[type="submit"]::-webkit-search-decoration,
+input[type="button"]::-webkit-search-decoration {
+  display: none;
+}
+
+input[type="submit"]::focus,
+input[type="button"]::focus {
+  outline-offset: -2px;
+}
+
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #fff url(../img/ec/select_arrow.png) no-repeat 95% 50%/12px auto;
+  border: none;
+  outline: none;
+}
+
+select:focus {
+  border: 2px solid #676767;
+}
+
+input:focus,
+button:focus,
+select:focus,
+textarea:focus {
+  outline: 0;
+}
+
+/* Make webkit render the search input like a normal text field */
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+/* Turn off the recent search for webkit. It adds about 15px padding on the left */
+::-webkit-search-decoration {
+  display: none;
+}
+
+/* Turn off scroll bars in IE unless needed */
+textarea {
+  overflow: auto;
+}
+
+@font-face {
+  font-family: "DINPro Medium";
+  font-style: normal;
+  font-weight: normal;
+  src: local("DINPro Medium"), url("../fonts/DINPro-Medium tr.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Futura-Bk-Book";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Futura-Bk-Book"), url("../fonts/Futura-Bk-Book.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Blacksword";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Blacksword"), url("../fonts/Blacksword.otf") format("OpenType");
+}
+
+@font-face {
+  font-family: "FuturaPTBook";
+  font-style: normal;
+  font-weight: normal;
+  src: local("FuturaPTBook"), url("../fonts/FuturaPTBook.woff") format("woff");
+}
+
+/* REM PX変換 */
+html {
+  font-size: 16px;
+}
+
+body {
+  color: #404040;
+  font-family: "ヒラギノ角ゴ StdN",  "Hiragino Kaku Gothic StdN", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W5", "ヒラギノ角ゴシック W5", "Hiragino Sans", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "Yu Gothic UI", sans-serif;
+  line-height: 1.5;
+}
+
+/* トップページのみ */
+body.home {
+  color: #333;
+  font-family: "ヒラギノ角ゴ StdN", "Hiragino Kaku Gothic StdN", sans-serif;
+}
+
+@media only screen and (max-width: 768px) {
+  html {
+    font-size: 3.33333vw;
+  }
+}
+
+/*パンくずリスト*/
+.path {
+  display: table;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .path {
+    display: inline-block;
+    width: 100%;
+  }
+}
+
+.path li {
+  color: #a0a0a0;
+  display: table-cell;
+  font-size: 0.5rem;
+  padding-right: 0.7rem;
+  vertical-align: middle;
+}
+
+@media (max-width: 767px) {
+  .path li {
+    display: inline-block;
+  }
+}
+
+.path li a {
+  color: #a0a0a0;
+  font-family: "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W5", "ヒラギノ角ゴシック W5", "Hiragino Sans", YuGothic, "Yu Gothic", "メイリオ", Meiryo, "Yu Gothic UI", sans-serif;
+  font-size: 0.5rem;
+}
+
+.path li:nth-of-type(2) {
+  line-height: 1;
+}
+
+.path li:last-of-type {
+  margin: 0;
+  padding-right: 0;
+}
+
+.mb0 {
+  margin-bottom: 0 !important;
+}
+
+/*
+
+基本
+
+---------------*/
+.l-inner {
+  margin: auto;
+  max-width: 800px;
+  width: 90%;
+}
+
+/*
+
+ヘッダー
+
+----------------------------------*/
+.p-header {
+  padding: 1.875rem 0;
+}
+
+.p-header__inner {
+  -ms-flex-pack: justify;
+  -webkit-box-pack: justify;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1100px;
+  width: 90%;
+}
+
+@media (min-width: 768px) {
+  .p-header__inner {
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+  }
+}
+
+.p-header__left {
+  max-width: 300px;
+  padding-left: 2%;
+  width: 42%;
+}
+
+@media (min-width: 768px) {
+  .p-header__left {
+    width: 25%;
+  }
+}
+
+.p-header__left-text {
+  color: #747474;
+  font-size: 0.875rem;
+  letter-spacing: .2em;
+  line-height: 1.22;
+  text-align: right;
+}
+
+.p-header__right {
+  max-width: 450px;
+  width: 55%;
+}
+
+@media (min-width: 768px) {
+  .p-header__right {
+    margin-left: 3%;
+    width: 22%;
+  }
+}
+
+.p-header__right-ttl {
+  color: #1f5fc9;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/*
+
+ログイン前
+
+----------------------------------*/
+.p-intro {
+  border-bottom: 1px solid #c9c9c9;
+  border-top: 1px solid #c9c9c9;
+  margin-bottom: 2.125rem;
+  padding: 1.25rem 0;
+}
+
+.p-intro-row {
+  -ms-flex-align: center;
+  -ms-flex-pack: justify;
+  -webkit-box-align: center;
+  -webkit-box-pack: justify;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .p-intro-row {
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+  }
+}
+
+.p-intro-row__left {
+  width: 23%;
+}
+
+@media (min-width: 768px) {
+  .p-intro-row__left {
+    width: 42%;
+  }
+}
+
+.p-intro-row__right {
+  color: #5b5b5b;
+  font-size: 1rem;
+  line-height: 1.31;
+  padding-left: 2%;
+  width: 76%;
+}
+
+@media (min-width: 768px) {
+  .p-intro-row__right {
+    font-size: 20px;
+    line-height: 1.57;
+    margin-left: 2%;
+    padding-left: 0;
+    width: 52%;
+  }
+}
+
+.p-entry__inner {
+  background-color: #e1edf9;
+  border: 1px solid #5aa3c9;
+  border-radius: 0.3125rem;
+  padding: 3.125rem 1.5rem;
+}
+
+/* フォームの項目 */
+.p-form-label {
+  color: #1f5fc9;
+  display: block !important;
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: .65rem;
+  text-align: center;
+}
+
+.p-form-label__note {
+  color: #272727;
+  display: inline-block;
+  font-weight: lighter;
+  margin-left: 1.2em;
+}
+
+/* フォームの内容 */
+#wpmem_login fieldset, #wpmem_reg fieldset {
+  margin: 0 !important;
+}
+
+.p-form-input {
+  margin-bottom: 1.57rem !important;
+  width: 100% !important;
+}
+
+.p-form-input__item {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff !important;
+  border: 1px solid #5aa3c9 !important;
+  border-radius: 0.3125rem !important;
+  color: #272727;
+  display: block;
+  font-size: 1.125rem;
+  font-weight: lighter;
+  line-height: normal;
+  padding: 0.9375rem 0.25rem !important;
+  text-align: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .p-form-input__item {
+    font-size: 20px !important;
+  }
+}
+
+.p-form-input__item::-webkit-input-placeholder {
+  color: #cfcfcf;
+}
+
+.p-form-input__item::-moz-placeholder {
+  color: #cfcfcf;
+}
+
+.p-form-input__item:-ms-input-placeholder {
+  color: #cfcfcf;
+}
+
+.p-form-input__item::-ms-input-placeholder {
+  color: #cfcfcf;
+}
+
+.p-form-input__item::placeholder {
+  color: #cfcfcf;
+}
+
+.p-form-button {
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.p-form-button__in {
+  background-color: #1f5fc9 !important;
+  border-radius: 0.3125rem !important;
+  color: #fff;
+  display: block;
+  font-size: 1.375rem;
+  font-weight: 600;
+  height: 12vw;
+  line-height: 12vw;
+  max-height: 75px;
+  text-align: center;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .p-form-button__in {
+    font-size: 24px !important;
+    line-height: 75px;
+  }
+}
+
+.p-lost-pass {
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.p-lost-pass__text {
+  color: #5d5d5d;
+  font-size: 1.25rem;
+  line-height: 1.34;
+}
+
+.p-lost-pass__arw {
+  color: #298cc2;
+  display: inline-block;
+  margin-left: .25em;
+}
+
+.p-color-pink {
+  color: #298cc2;
+}
+
+.p-footer {
+  border-top: 1px solid #c9c9c9;
+  padding: 1.875rem 0;
+}
+
+.p-footer__logo {
+  margin: auto;
+  max-width: 220px;
+  width: 38%;
+}
+
+/*
+
+ログイン後
+
+------------------------*/
+.p-result {
+  background-color: #5b5b5b;
+  color: #fff;
+  padding: 1rem 0;
+}
+
+.p-result__inner {
+  -ms-flex-align: center;
+  -ms-flex-pack: justify;
+  -webkit-box-align: center;
+  -webkit-box-pack: justify;
+  align-items: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: space-between;
+}
+
+.p-result__left {
+  font-size: 1.125rem;
+  line-height: 1.35;
+  width: 48%;
+}
+
+.p-result__right {
+  font-size: 4.0625rem;
+  font-weight: 600;
+  text-align: right;
+  width: 49%;
+}
+
+/* 陽性 */
+.p-result--true {
+  background-color: #c92929;
+}
+
+/* 陰性 */
+.p-result--false {
+  background-color: #299a40;
+}
+
+.p-result-user__col {
+  border-top: 1px solid #c9c9c9;
+  letter-spacing: .05em;
+  line-height: 1;
+  padding: 2.8125rem 0;
+  text-align: center;
+}
+
+.p-result-user__col:last-of-type {
+  border-bottom: 1px solid #c9c9c9;
+}
+
+.p-result-user__ttl {
+  color: #979797;
+  font-size: 1.25rem;
+  font-weight: 100;
+  margin-bottom: .78rem;
+}
+
+.p-result-user__out {
+  color: #454545;
+  font-size: 2.375rem;
+  font-weight: 600;
+}
+
+.p-certificate {
+  padding: 2.8125rem 0;
+  text-align: center;
+}
+
+.p-certificate__note {
+  font-size: 1rem;
+  margin-bottom: .55rem;
+}
+
+.p-certificate__btn {
+  background-color: #1f5fc9;
+  border-radius: 0.3125rem;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-size: 1.625rem;
+  font-weight: 600;
+  height: 18vw;
+  line-height: 18vw;
+  margin: auto;
+  max-height: 82px;
+  max-width: 380px;
+  text-align: center;
+  width: 84%;
+}
+
+@media (min-width: 768px) {
+  .p-certificate__btn {
+    line-height: 82px;
+  }
+}
+
+.p-certificate__btn:hover {
+  opacity: 0.8;
+}
+
+/*
+
+モーダル
+
+----------------------------------*/
+.p-modal {
+  /* scrollにはしないことでスクロールの必要がないときはスクロールバーを表示させない */
+  -webkit-overflow-scrolling: touch;
+  -webkit-transition: ease-in .3s;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  position: fixed;
+  top: 0;
+  transition: ease-in .3s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 9999;
+}
+
+.p-modal__bg {
+  background-color: rgba(70, 70, 70, 0.68);
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9998;
+}
+
+.p-modal__content {
+  -webkit-transform: translate(-50%, -50%);
+  background-color: #fff;
+  left: 50%;
+  max-width: 600px;
+  padding: 2.1rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 94%;
+  z-index: 9999;
+}
+
+.p-modal__guide {
+  font-size: 1.7rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.p-modal__btn-area {
+  margin-bottom: 1.78rem;
+}
+
+@media (min-width: 768px) {
+  .p-modal__btn-area {
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.p-modal__btn {
+  background-color: #1f5fc9;
+  border-radius: 0.25rem;
+  color: #fff;
+  display: block;
+  font-size: 1.52rem;
+  font-weight: 600;
+  height: 18vw;
+  line-height: 18vw;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .p-modal__btn {
+    height: 57px;
+    line-height: 57px;
+    margin: 0 .88rem;
+    width: 230px;
+  }
+}
+
+.p-modal__close {
+  color: #2796b5;
+  font-size: 1.28rem;
+  text-align: center;
+}
+
+/* モーダル展開後 */
+.is-modal-open {
+  opacity: 1;
+  visibility: visible;
+}
